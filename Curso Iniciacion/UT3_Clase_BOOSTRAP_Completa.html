@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clase Bootstrap Completa (nivel iniciación)</title>
+
+  <!--
+    🧑‍🏫 Guía de lectura de comentarios (Better Comments):
+      ! Importante   → idea clave
+      ? Nota         → aclaración útil
+      * Ejemplo      → muestra cómo se hace
+      TODO Alumno    → tarea concreta para practicar
+
+    Objetivo de esta clase:
+      - Aprender a enlazar y usar Bootstrap desde un CDN.
+      - Practicar los componentes básicos: container, texto, botones, formularios, tablas, alertas, carrusel.
+      - Ir de menos a más, aplicando lo aprendido en un mini-proyecto final.
+  -->
+
+  <!-- ! Paso 1: Enlazamos Bootstrap CSS (siempre en el <head>) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- 1) CONTENEDOR -->
+  <div class="container mt-5">
+    <h1 class="text-center">Bienvenido a Bootstrap 🚀</h1>
+    <p class="lead text-muted text-center">
+      Bootstrap es un framework CSS con clases predefinidas que nos ahorra escribir mucho código.
+      Solo tenemos que usar las clases correctas en nuestro HTML.
+    </p>
+    <!--
+      - container: centra y limita el ancho del contenido.
+      - mt-5: margen superior grande.
+      - lead: destaca texto (un poco más grande).
+      - text-muted: texto en gris claro.
+    -->
+
+    <!-- TODO Alumno:
+         1) Cambia "text-center" por "text-start" o "text-end" para ver la diferencia.
+         2) Añade class="bg-light p-3" a este párrafo para darle un fondo y padding. -->
+  </div>
+
+  <!-- 2) BOTONES -->
+  <section class="container mt-5">
+    <h2>Botones en Bootstrap</h2>
+    <p>Con la clase <code>btn</code> y variantes (<code>btn-primary</code>, <code>btn-success</code>…), tenemos estilos listos:</p>
+
+    <button class="btn btn-primary">Primario</button>
+    <button class="btn btn-secondary">Secundario</button>
+    <button class="btn btn-success">Éxito</button>
+    <button class="btn btn-danger">Peligro</button>
+    <button class="btn btn-warning">Advertencia</button>
+    <button class="btn btn-info">Info</button>
+
+    <!-- TODO Alumno:
+         1) Prueba btn-lg y btn-sm para tamaños.
+         2) Crea un botón con class="btn btn-outline-dark". -->
+  </section>
+
+  <!-- 3) FORMULARIOS -->
+  <section class="container mt-5">
+    <h2>Formularios en Bootstrap</h2>
+    <form>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" placeholder="Introduce tu nombre">
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo:</label>
+        <input type="email" class="form-control" id="email" placeholder="ejemplo@correo.com">
+      </div>
+
+      <div class="mb-3">
+        <label for="pais" class="form-label">País:</label>
+        <select class="form-select" id="pais">
+          <option>España</option><option>México</option><option>Argentina</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary">Enviar</button>
+    </form>
+
+    <!--
+      - form-control: hace que inputs y selects ocupen todo el ancho y se vean consistentes.
+      - mb-3: añade espacio entre campos.
+    -->
+
+    <!-- TODO Alumno:
+         1) Añade un campo "Contraseña" con input type="password".
+         2) Haz que el botón sea btn-success. -->
+  </section>
+
+  <!-- 4) TABLAS -->
+  <section class="container mt-5">
+    <h2>Tablas</h2>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr><th>Producto</th><th>Precio</th><th>Cantidad</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Manzanas</td><td>2.00 €</td><td>5</td></tr>
+        <tr><td>Pan</td><td>1.50 €</td><td>10</td></tr>
+      </tbody>
+    </table>
+    <!--
+      - table: estilo base.
+      - table-striped: filas alternadas.
+      - table-hover: resalta fila al pasar el ratón.
+    -->
+
+    <!-- TODO Alumno:
+         1) Añade una fila nueva con otro producto.
+         2) Prueba class="table-dark" para estilo oscuro. -->
+  </section>
+
+  <!-- 5) ALERTAS -->
+  <section class="container mt-5">
+    <h2>Alertas</h2>
+    <div class="alert alert-success">✔ Operación exitosa</div>
+    <div class="alert alert-danger">⚠ Error detectado</div>
+    <div class="alert alert-warning">⚡ Cuidado</div>
+    <div class="alert alert-info">ℹ Información</div>
+    <!--
+      - alert + alert-color: muestra mensajes llamativos.
+    -->
+
+    <!-- TODO Alumno:
+         Crea una alerta con class="alert alert-primary". -->
+  </section>
+
+  <!-- 6) CARRUSEL -->
+  <section class="container mt-5">
+    <h2>Carrusel</h2>
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://picsum.photos/id/101/800/400" class="d-block w-100" alt="Imagen 1">
+        </div>
+        <div class="carousel-item">
+          <img src="https://picsum.photos/id/102/800/400" class="d-block w-100" alt="Imagen 2">
+        </div>
+        <div class="carousel-item">
+          <img src="https://picsum.photos/id/103/800/400" class="d-block w-100" alt="Imagen 3">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+    <!--
+      - carousel: permite crear un pase de imágenes.
+      - carousel-item: cada diapositiva.
+      - d-block w-100: imagen ocupa todo el ancho.
+    -->
+
+    <!-- TODO Alumno:
+         1) Cambia las imágenes por 3 tuyas.
+         2) Añade captions (texto encima de la imagen). -->
+  </section>
+
+  <!-- 7) MINI PROYECTO FINAL -->
+  <section id="mini-proyecto" class="container mt-5">
+    <h2>Proyecto Final · Portfolio con Bootstrap</h2>
+    <p>Ahora mejora tu Portfolio anterior usando Bootstrap:</p>
+    <ol>
+      <li>Header con <code>navbar</code> de Bootstrap.</li>
+      <li>Sección "Sobre mí" con <code>container</code> y <code>row</code>.</li>
+      <li>Sección "Proyectos" con <code>cards</code> de Bootstrap.</li>
+      <li>Galería de imágenes usando <code>row</code> y <code>col</code>.</li>
+      <li>Formulario de contacto estilizado con <code>form-control</code>.</li>
+      <li>Footer simple con <code>bg-dark text-white text-center p-3</code>.</li>
+    </ol>
+
+    <!-- TODO Alumno:
+         Intenta rehacer tu portfolio básico aplicando clases de Bootstrap.
+         Compara antes y después para notar lo mucho que simplifica el diseño. -->
+  </section>
+
+  <!-- ! Paso 2: Bootstrap JS (siempre antes de </body>) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- ! ============================================================
+    ! UT1 · Plantilla HTML Rellenable (desde CERO)
+    ? Autor: Joaquín — Nivel: iniciación
+    
+    * Objetivo: que el alumno construya una página HTML básica paso a paso.
+    * Regla: nada viene resuelto; todo se completa siguiendo los TODO.
+    ? Nota: solo HTML (sin CSS/JS). Usa Live Server y prueba tras cada paso.
+    ============================================================ -->
+
+    <!-- ! Paso 0 — Estructura base del documento
+         - Añade el atributo lang al <html> (por ejemplo, es)
+         - Declara la codificación UTF-8
+         - Añade la etiqueta meta viewport para móviles
+         - Escribe un título de página (entre <title>...>)
+         
+         ? Pista: estas etiquetas van dentro de <head> y ayudan con idioma,
+           codificación y adaptación a móviles.
+    -->
+
+    <!-- ✅ Solución (comentada)
+    <!DOCTYPE html>
+    <html lang="es">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mi primera página HTML</title>
+      </head>
+    -->
+    <meta charset="" />
+    <meta name="viewport" content="" />
+    <title></title>
+  </head>
+
+  <body>
+    <!-- ============================================================
+    ! Paso 1 — Cabecera y navegación
+    * Explicación: header contiene el título o logo; nav agrupa enlaces.
+    ? Buenas prácticas: un solo <h1> por página; enlaces internos a secciones.
+    ============================================================ -->
+    <header>
+      <!-- TODO Alumno: Escribe tu título principal dentro de <h1> -->
+      <h1></h1>
+
+      <!-- TODO Alumno: Crea un menú de navegación dentro de <nav>
+           con 4 enlaces ancla a las secciones: #sobre-mi, #proyectos,
+           #galeria y #contacto. Puedes usar anchors sueltos o una lista ul/li. -->
+      <nav>
+        
+      </nav>
+
+      <!-- ✅ Solución (comentada)
+      <h1>Mi Portafolio — Tu Nombre</h1>
+      <nav>
+        <ul>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      -->
+    </header>
+
+    <!-- ============================================================
+    ! Paso 2 — Sección "Sobre mí"
+    * Explicación: section crea bloques temáticos; usa títulos jerárquicos.
+    ? Consejo: escribe 2–3 frases claras; evita mayúsculas sostenidas.
+    ============================================================ -->
+    <main>
+      <section id="sobre-mi">
+        <!-- TODO Alumno: Añade un <h2> y un párrafo de presentación -->
+        
+
+        <!-- ✅ Solución (comentada)
+        <h2>Sobre mí</h2>
+        <p>Hola, soy Tu Nombre. Estoy aprendiendo desarrollo web y esta es
+           mi primera página hecha desde cero con HTML.</p>
+        -->
+      </section>
+
+      <!-- ============================================================
+      ! Paso 3 — Lista de proyectos
+      * Explicación: ul (viñetas) / ol (numerada). Usa li para cada proyecto.
+      ? Consejo: nombre corto + 1 frase. Evita párrafos largos en listas.
+      ============================================================ -->
+      <section id="proyectos">
+        <!-- TODO Alumno: Crea un <h2> y una lista <ul> con 2–3 proyectos -->
+        
+
+        <!-- ✅ Solución (comentada)
+        <h2>Proyectos</h2>
+        <ul>
+          <li>Portfolio HTML básico</li>
+          <li>Currículum en una página</li>
+          <li>Mini web de recetas</li>
+        </ul>
+        -->
+      </section>
+
+      <!-- ============================================================
+      ! Paso 4 — Galería de imágenes
+      * Explicación: usa siempre el atributo alt (accesibilidad).
+      ? Extra: figure + figcaption para título/pie de foto.
+      ============================================================ -->
+      <section id="galeria">
+        <!-- TODO Alumno: Crea un <h2> y añade 2–3 imágenes con alt descriptivo -->
+        
+
+        <!-- ✅ Solución (comentada)
+        <h2>Galería</h2>
+        <figure>
+          <img src="https://via.placeholder.com/240x160" alt="Captura de mi primer proyecto" />
+          <figcaption>Mi primer proyecto</figcaption>
+        </figure>
+        <figure>
+          <img src="https://via.placeholder.com/240x160" alt="Diseño de portada de portfolio" />
+          <figcaption>Diseño de portada</figcaption>
+        </figure>
+        -->
+      </section>
+
+      <!-- ============================================================
+      ! Paso 5 — Tabla (opcional)
+      * Explicación: usa caption + thead + tbody + tfoot para accesibilidad.
+      ? Consejo: th con scope="col"/"row".
+      ============================================================ -->
+      <section id="tabla-opcional">
+        <!-- TODO Alumno (opcional): Crea una tabla con 3 productos y total -->
+        
+
+        <!-- ✅ Solución (comentada)
+        <h2>Precios</h2>
+        <table>
+          <caption>Lista de productos</caption>
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Teclado</td><td>19,99 €</td><td>12</td></tr>
+            <tr><td>Ratón</td><td>9,50 €</td><td>30</td></tr>
+            <tr><td>Pantalla</td><td>129,00 €</td><td>5</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="3">Precios con IVA incluido</td></tr>
+          </tfoot>
+        </table>
+        -->
+      </section>
+
+      <!-- ============================================================
+      ! Paso 6 — Formulario de contacto
+      * Explicación: relaciona label con for e id; usa tipos adecuados.
+      ? Consejo: required y placeholder ayudan al usuario.
+      ============================================================ -->
+      <section id="contacto">
+        <!-- TODO Alumno: Crea un <h2> y un <form> con nombre, email y mensaje -->
+        
+
+        <!-- ✅ Solución (comentada)
+        <h2>Contacto</h2>
+        <form action="#" method="get">
+          <label for="c-nombre">Nombre:</label>
+          <input id="c-nombre" name="nombre" type="text" placeholder="Tu nombre" required />
+
+          <label for="c-email">Email:</label>
+          <input id="c-email" name="email" type="email" placeholder="ejemplo@correo.com" required />
+
+          <label for="c-mensaje">Mensaje:</label>
+          <textarea id="c-mensaje" name="mensaje" rows="4" placeholder="¿En qué puedo ayudarte?"></textarea>
+
+          <button type="submit">Enviar</button>
+        </form>
+        -->
+      </section>
+    </main>
+
+    <!-- ============================================================
+    ! Paso 7 — Pie de página
+    * Explicación: enlaces externos con target="_blank" y rel seguro.
+    ? Consejo: pon el año actual y autor.
+    ============================================================ -->
+    <footer>
+      <!-- TODO Alumno: Añade un texto de copyright y 2 enlaces externos -->
+      
+
+      <!-- ✅ Solución (comentada)
+      <p>© 2025 — Tu Nombre</p>
+      <p>
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        ·
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </p>
+      -->
+    </footer>
+
+    <!-- ============================================================
+    ! Chuleta rápida (comentada)
+    * Estructura: header / nav / main / section / footer
+    * Títulos: h1 (único) → h2 → h3
+    * Texto: p, strong, em, br (mejor evitar br si se puede)
+    * Listas: ul/ol + li
+    * Imágenes: img + alt (o figure + figcaption)
+    * Tablas: caption + thead + tbody + tfoot + th scope
+    * Formularios: form + label/for + id + name + required
+    
+    ? Diseño opcional (COMENTADO): si quieres ver más bonito el HTML puro,
+      puedes activar este estilo mínimo copiándolo en un <style> dentro de <head>.
+      No es obligatorio para UT1.
+    
+    <style>
+      body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height:1.5; margin:0; }
+      main, header, footer{ max-width: 900px; margin: 0 auto; padding: 16px; }
+      nav ul{ list-style: none; padding: 0; display: flex; gap: 12px; }
+      section{ border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px; }
+    </style>
+    ============================================================ -->
+  </body>
+</html>

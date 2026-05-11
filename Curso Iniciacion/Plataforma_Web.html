@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia Interactiva - Desarrollo Web Iniciación</title>
+
+  <!-- Tipografías de programación y UI -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Marked.js (Markdown Renderer) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Prism.js (Syntax Highlighting) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <link rel="stylesheet" href="./Plataforma_Web.mobile.css">
+
+  <style>
+    :root {
+      --bg-dark: #030712; 
+      --bg-panel: #0f172a;
+      --bg-sidebar: #020617;
+      --border-color: rgba(148, 163, 184, 0.15);
+      --border-hover: rgba(56, 189, 248, 0.4);
+      --accent: #f59e0b; /* Naranja HTML/Web */
+      --accent-2: #10b981;
+      --text-main: #94a3b8;
+      --text-light: #f8fafc;
+      --splitter: #334155;
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 80%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 80%);
+    }
+
+    /* Top Bar */
+    .topbar {
+      height: 50px;
+      min-height: 50px;
+      background-color: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 600;
+      color: var(--text-light);
+      z-index: 10;
+    }
+
+    .topbar .logo { 
+      margin-right: 12px; 
+      color: #000; 
+      font-weight: 800; 
+      background: linear-gradient(135deg, var(--accent), #fbbf24);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-light);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: rgba(255,255,255,0.1); border-color: var(--border-hover); }
+    .btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+    .btn.primary:hover { background: #fcd34d; }
+
+    /* Layout Principal */
+    .main-workspace {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 50px);
+      position: relative;
+    }
+
+    /* Barra Lateral */
+    .sidebar {
+      width: 250px;
+      min-width: 200px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      z-index: 5;
+    }
+
+    .sidebar-title {
+      padding: 16px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-color);
+      font-weight: 700;
+    }
+
+    .lesson-list {
+      flex: 1;
+      overflow-y: auto;
+      list-style: none;
+    }
+
+    .lesson-item {
+      padding: 12px 18px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      transition: all 0.2s ease;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    .lesson-item:hover {
+      background-color: rgba(255,255,255,0.03);
+      color: #fff;
+    }
+
+    .lesson-item.active {
+      background-color: rgba(245, 158, 11, 0.08);
+      border-left: 3px solid var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Contenedores Divisibles */
+    .v-split-container {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .upper-panel {
+      display: flex;
+      flex-direction: column;
+      flex: 1.2;
+      min-height: 100px;
+      background-color: var(--bg-panel);
+      overflow: hidden;
+    }
+
+    .lower-panels {
+      display: flex;
+      flex-direction: row;
+      flex: 1.8;
+      min-height: 150px;
+      overflow: hidden;
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #editor-panel { flex: 1; min-width: 200px; background-color: #000; }
+    #preview-panel { flex: 1; min-width: 200px; background-color: #fff; }
+
+    /* Cabeceras de panel */
+    .panel-header {
+      padding: 8px 16px;
+      background-color: rgba(15, 23, 42, 0.9);
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* Resizers */
+    .resizer-h {
+      height: 6px;
+      background-color: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      cursor: row-resize;
+      transition: background 0.2s;
+      z-index: 5;
+    }
+    .resizer-h:hover, .resizer-h:active { background-color: var(--accent); }
+
+    .resizer-v {
+      width: 6px;
+      background-color: var(--bg-sidebar);
+      border-left: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      cursor: col-resize;
+      transition: background 0.2s;
+      z-index: 5;
+    }
+    .resizer-v:hover, .resizer-v:active { background-color: var(--accent); }
+
+    /* Visor de Teoría (Markdown Renderizado) */
+    #theory-viewer {
+      padding: 24px 32px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+      color: #fff;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-family: var(--font-sans);
+    }
+    .markdown-body h1 { margin-top: 0; font-size: 1.8rem; color: var(--accent); }
+    .markdown-body h2 { font-size: 1.4rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+    .markdown-body p { margin-bottom: 16px; }
+    .markdown-body ul, .markdown-body ol { margin-bottom: 16px; padding-left: 24px; }
+    .markdown-body pre {
+      background: rgba(0,0,0,0.5);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      overflow-x: auto;
+      margin-bottom: 16px;
+    }
+    .markdown-body code {
+      font-family: var(--font-mono);
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: #fcd34d;
+    }
+    .markdown-body pre code { background: none; padding: 0; color: inherit; }
+    .markdown-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+      margin-inline-start: 0;
+      color: #cbd5e1;
+      background: rgba(245, 158, 11, 0.05);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* Textarea del editor Web */
+    .editor-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+    }
+    #web-editor {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      padding: 16px;
+      border: none;
+      resize: none;
+      outline: none;
+      box-shadow: inset 0 2px 15px rgba(0,0,0,0.5);
+      tab-size: 2;
+    }
+    #web-editor:focus { box-shadow: inset 0 2px 15px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(245, 158, 11, 0.3); }
+
+    /* Indicador de guardado */
+    #save-indicator {
+      font-size: 0.75rem;
+      color: var(--text-main);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-weight: normal;
+      font-family: var(--font-sans);
+    }
+    #save-indicator.show { opacity: 1; }
+
+    /* Live Preview & Device Simulator */
+    .preview-container { flex: 1; display: flex; flex-direction: column; background: #cbd5e1; overflow: hidden; align-items: center; justify-content: center; position: relative;}
+    #preview-frame { width: 100%; height: 100%; border: none; background: #fff; transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease; }
+    #preview-frame.mobile-mode { width: 375px; height: 90%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); overflow: hidden; }
+    #preview-frame.desktop-mode { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
+
+    /* Console Panel */
+    .console-panel { height: 120px; min-height: 120px; background: #000; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; font-family: var(--font-mono); font-size: 0.8rem;}
+    .console-header { background: #0f172a; color: var(--text-main); font-size: 0.75rem; padding: 4px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color);}
+    .console-logs { flex: 1; overflow-y: auto; padding: 8px 12px; list-style: none; margin: 0; color: #a3b8cc; }
+    .console-logs li { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; margin-bottom: 4px; word-break: break-all; }
+    .console-logs li.error { color: #f87171; background: rgba(248, 113, 113, 0.1); border-left: 2px solid #ef4444; padding-left: 8px;}
+
+    /* Utils */
+    .btn-toggle-sol { background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.4); color: #c4b5fd; }
+    .btn-toggle-sol:hover { background: rgba(139, 92, 246, 0.4); }
+    .btn-toggle-sol.active { background: #8b5cf6; color: #fff; border-color: #8b5cf6;}
+    .btn-danger { background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #fca5a5; }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.2); }
+
+    /* Toggle System */
+    .btn-icon { background: transparent; border: none; font-size: 1.1rem; cursor: pointer; color: var(--text-main); transition: opacity 0.2s, transform 0.2s; padding: 0 4px; display: flex; align-items: center; justify-content: center; }
+    .btn-icon:hover { opacity: 0.8; transform: scale(1.1); }
+    
+    .sidebar { transition: width 0.3s ease, min-width 0.3s ease; overflow: hidden; white-space: nowrap; }
+    .sidebar.collapsed { width: 0 !important; min-width: 0 !important; border: none; }
+    
+    .upper-panel { transition: height 0.3s ease, flex 0.3s ease; }
+    .upper-panel.collapsed { flex: 0 0 auto !important; height: auto !important; min-height: 0 !important; }
+    .upper-panel.collapsed .panel-content { display: none; }
+    
+    #preview-panel { transition: width 0.3s ease, flex 0.3s ease; }
+    #preview-panel.collapsed { flex: 0 0 0 !important; width: 0 !important; min-width: 0 !important; border: none; }
+    
+    .resizer-h.hidden, .resizer-v.hidden { display: none !important; }
+  </style>
+</head>
+<body class="platform-web">
+
+  <!-- BARRA SUPERIOR -->
+  <header class="topbar">
+    <button class="btn-icon" id="toggle-sidebar" title="Ocultar/Mostrar Menú" style="margin-right: 12px; font-size: 1.3rem;">🗂️</button>
+    <div class="logo">HTML/CSS/JS</div>
+    <span>Joaquín - Plataforma Interactiva de Desarrollo Web</span>
+    
+    <div class="topbar-actions">
+      <button class="btn" id="btn-descargar-web">⬇️ Descargar mi Web (.html)</button>
+    </div>
+  </header>
+
+  <nav class="mobile-quick-nav" id="mobile-quick-nav" aria-label="Accesos rapidos plataforma web">
+    <button class="mobile-quick-btn" type="button" data-mobile-target="lessons">Temario</button>
+    <button class="mobile-quick-btn" type="button" data-mobile-target="theory">Teoria</button>
+    <button class="mobile-quick-btn" type="button" data-mobile-target="study">Estudio</button>
+    <button class="mobile-quick-btn" type="button" data-mobile-target="editor">Codigo</button>
+    <button class="mobile-quick-btn" type="button" data-mobile-target="preview">Vista</button>
+  </nav>
+
+  <div class="mobile-sidebar-backdrop" id="mobile-sidebar-backdrop" hidden></div>
+
+  <div class="main-workspace">
+
+    <section class="mobile-lessons-panel" id="mobile-lessons-panel" aria-label="Temario movil">
+      <div class="mobile-lessons-header">
+        <span class="mobile-lessons-kicker">Temario Web</span>
+        <h2 id="mobile-current-lesson">Selecciona una unidad</h2>
+        <p>Cambia de tema aqui y entra luego en teoria, codigo o vista.</p>
+      </div>
+      <ul class="mobile-lesson-list" id="mobile-lesson-list"></ul>
+    </section>
+    
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Temario Web</div>
+      <ul class="lesson-list" id="lesson-list">
+        <!-- Rellenado por JS -->
+      </ul>
+    </aside>
+
+    <!-- ZONA CENTRAL DE TRABAJO -->
+    <div class="v-split-container">
+      
+      <!-- PANELES SUPERIORES (Enunciado y Teoría Markdown) -->
+      <div class="upper-panel" id="upper-panel">
+        <div class="panel-header">
+          <div style="display:flex; align-items:center; gap: 8px;">
+            <button class="btn-icon" id="toggle-theory" title="Ocultar/Mostrar Teoría">🔽</button>
+            <span>📖 Teoría Interactiva: </span>
+            <span id="current-file-name" style="color:var(--accent); font-family: var(--font-mono);">Cargando...</span>
+          </div>
+        </div>
+        <div class="panel-content markdown-body" id="theory-viewer">
+          <div id="theory-content">Selecciona una lección...</div>
+        </div>
+      </div>
+
+      <!-- Resizer Horizontal -->
+      <div class="resizer-h" id="resizer-h"></div>
+
+      <!-- PANELES INFERIORES (H-Split: Editor | Live Preview) -->
+      <div class="lower-panels" id="lower-panels">
+        
+        <!-- EDITOR WEB -->
+        <div class="panel" id="editor-panel">
+          <div class="panel-header" style="background-color: #020617;">
+            <div style="display:flex; align-items:center; gap: 12px;">
+              <button class="btn-icon" id="toggle-preview" title="Ocultar/Mostrar Navegador" style="font-size: 1.2rem;">�️</button>
+              <span>�💻 Editor de Código (<span id="editor-mode">HTML/CSS/JS</span>)</span>
+              <span id="save-indicator">💾 Guardado</span>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-danger" id="btn-reset-plantilla" title="Borrará tus cambios y recargará la base">🔄 Plantilla Base</button>
+              <button class="btn btn-toggle-sol" id="btn-ver-solucion" style="display:none">👁️ Ver Solución Oficial</button>
+            </div>
+          </div>
+          <div class="editor-container">
+            <textarea id="web-editor" spellcheck="false" placeholder="<!-- Escribe aquí tu código HTML/CSS/JS -->&#10;<h1>Hola Mundo</h1>"></textarea>
+          </div>
+        </div>
+
+        <!-- Resizer Vertical -->
+        <div class="resizer-v" id="resizer-v"></div>
+
+        <!-- NAVEGADOR EN VIVO (Preview) -->
+        <div class="panel" id="preview-panel">
+          <div class="panel-header" style="background-color: #f1f5f9; color: #334155; border-bottom: 1px solid #cbd5e1;">
+            <div style="display:flex; align-items:center; gap: 8px;">
+              <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f87171;"></span>
+              <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#fbbf24;"></span>
+              <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#34d399;"></span>
+              <span style="margin-left:8px; font-weight:700;">🌐 Navegador (Real-Time)</span>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn-icon" id="btn-device-desktop" title="Vista Escritorio" style="color: #334155; font-size: 1.2rem;">💻</button>
+              <button class="btn-icon" id="btn-device-mobile" title="Vista Móvil (iPhone)" style="color: #94a3b8; font-size: 1.2rem;">📱</button>
+            </div>
+          </div>
+          
+          <div class="preview-container">
+            <iframe id="preview-frame" class="desktop-mode" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
+          </div>
+
+          <!-- MINI CONSOLA Oculta/Visible -->
+          <div class="console-panel">
+            <div class="console-header">
+              <span>Terminal JS Integrada</span>
+              <button class="btn-icon" id="btn-clear-console" style="color: #94a3b8; font-size: 0.8rem; padding:0" title="Limpiar Consola">🗑️</button>
+            </div>
+            <ul id="console-logs" class="console-logs"></ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. DEFINICIÓN DEL TEMARIO Y ARCHIVOS FÍSICOS
+       ========================================================================= */
+    // Mapeamos los archivos reales que hay en tu carpeta 'Curso Iniciacion'
+    const lessons = [
+      { 
+        title: "UT0: Entorno Web", 
+        md: "UT0_Configuracion_Entorno.md", 
+        base: "UT0_Configuracion_Entorno.html", 
+        sol: null 
+      },
+      { 
+        title: "UT1: HTML Básico", 
+        md: "UT1_Clase_HTML_Completa.md", 
+        base: "UT1_Plantilla_HTML_Rellenable.html", 
+        sol: "UT1_Clase_HTML_Completa.html" 
+      },
+      { 
+        title: "UT2: CSS Estilos", 
+        md: "UT2_Clase_CSS_Completa.md", 
+        base: "UT2_Plantilla_CSS_Rellenable.html", 
+        sol: "UT2_Clase_CSS_Completa.html" 
+      },
+      { 
+        title: "UT3: Bootstrap", 
+        md: "UT3_Clase_BOOSTRAP_Completa.md", 
+        base: "UT3_Plantilla_Bootstrap_Rellenable.html", 
+        sol: "UT3_Clase_BOOSTRAP_Completa.html" 
+      },
+      { 
+        title: "UT4: JavaScript", 
+        md: "UT4_Clase_JAVASCRIPT_Completa.md", 
+        base: "UT4_Plantilla_JavaScript_Rellenable.html", 
+        sol: "UT4_Clase_JAVASCRIPT_Completa.html" 
+      },
+      { 
+        title: "UT5: Proyecto Final & IA", 
+        md: "UT5_Clase_Final_IA.md", 
+        base: "UT5_Plantilla_Bootstrap_JS_Rellenable.html", 
+        sol: "UT5_Clase_Final_IA.html" 
+      },
+      { 
+        title: "UT6: Git y DevTools", 
+        md: "UT6_Clase_DevTools_Git_Completa.md", 
+        base: "UT6_Plantilla_DevTools_Git_Rellenable.html", 
+        sol: "UT6_Clase_DevTools_Git_Completa.html" 
+      }
+    ];
+
+    const WEB_PLATFORM_LAST_LESSON_KEY = 'webPlatform_lastLesson';
+
+    let currentLessonIndex = 0;
+    let showingSolution = false;
+    let currentBaseCode = "";
+    let currentSolCode = "";
+
+    function getLessonIndexFromHash() {
+      const match = window.location.hash.match(/^#lesson-(\d+)$/);
+      if (!match) return null;
+
+      const index = Number.parseInt(match[1], 10);
+      if (Number.isNaN(index) || index < 0 || index >= lessons.length) {
+        return null;
+      }
+
+      return index;
+    }
+
+    function getInitialLessonIndex() {
+      const hashIndex = getLessonIndexFromHash();
+      if (hashIndex !== null) return hashIndex;
+
+      const savedIndex = Number.parseInt(localStorage.getItem(WEB_PLATFORM_LAST_LESSON_KEY) || '', 10);
+      if (!Number.isNaN(savedIndex) && savedIndex >= 0 && savedIndex < lessons.length) {
+        return savedIndex;
+      }
+
+      return 0;
+    }
+
+    // Poblar el menú lateral
+    const listElement = document.getElementById('lesson-list');
+    lessons.forEach((lesson, index) => {
+      const li = document.createElement('li');
+      li.className = 'lesson-item';
+      li.textContent = lesson.title;
+      li.onclick = () => loadLesson(index);
+      listElement.appendChild(li);
+    });
+
+    /* =========================================================================
+       2. LÓGICA DE CARGA Y RENDERIZADO (Markdown + Código HTLM)
+       ========================================================================= */
+    async function loadLesson(index) {
+      if (index < 0 || index >= lessons.length) return;
+
+      currentLessonIndex = index;
+      showingSolution = false;
+      localStorage.setItem(WEB_PLATFORM_LAST_LESSON_KEY, String(index));
+
+      const expectedHash = `#lesson-${index}`;
+      if (window.location.hash !== expectedHash) {
+        history.replaceState(null, '', expectedHash);
+      }
+      
+      // Estilos visuales del menú
+      document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+      listElement.children[index].classList.add('active');
+      
+      const lesson = lessons[index];
+      const btnSol = document.getElementById("btn-ver-solucion");
+      
+      // Configurar botón de solución
+      if(lesson.sol) {
+         btnSol.style.display = 'inline-flex';
+         btnSol.textContent = '👁️ Ver Solución Oficial';
+         btnSol.className = 'btn btn-toggle-sol';
+      } else {
+         btnSol.style.display = 'none';
+      }
+      
+      // 1. Cargar la Teoría (Markdown)
+      await fetchAndRenderTheory(lesson.md);
+
+      // 2. Cargar el Editor (Plantilla Rellenable o Caché)
+      await loadEditorContent(index, lesson);
+    }
+
+    async function fetchAndRenderTheory(filename) {
+      const theoryContent = document.getElementById("theory-content");
+      document.getElementById("current-file-name").textContent = filename;
+      theoryContent.innerHTML = "<p style='color:#888; font-style:italic;'>Cargando apuntes...</p>";
+      
+      try {
+          const response = await fetch('./' + filename);
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const text = await response.text();
+          
+          // Renderizar Markdown a HTML
+          theoryContent.innerHTML = marked.parse(text);
+          
+          // Aplicar syntax highlighting a los bloques de código renderizados
+          document.querySelectorAll('#theory-content pre code').forEach((block) => {
+            Prism.highlightElement(block);
+          });
+      } catch (e) {
+          theoryContent.innerHTML = `<p style='color:#f87171;'>❌ Error al cargar "${filename}".<br>Asegúrate de ejecutar esta página con Live Server.</p>`;
+      }
+      document.getElementById("theory-viewer").scrollTop = 0;
+    }
+
+    async function loadEditorContent(index, lesson) {
+      const editor = document.getElementById("web-editor");
+      
+      try {
+          // Pre-cargar el string base rellenado
+          const responseBase = await fetch('./' + lesson.base);
+          currentBaseCode = responseBase.ok ? await responseBase.text() : "<!-- Error al cargar la plantilla base -->";
+
+          // Pre-cargar la solución si existe
+          if(lesson.sol){
+             const responseSol = await fetch('./' + lesson.sol);
+             currentSolCode = responseSol.ok ? await responseSol.text() : "<!-- Error al cargar la solución -->";
+          }
+      } catch (e) {
+          currentBaseCode = "<!-- Abre con Live Server para cargar archivos locales -->";
+      }
+
+      // Comprobar LocalStorage
+      const savedCode = localStorage.getItem('webPlatform_draft_' + index);
+      if (savedCode) {
+          editor.value = savedCode;
+      } else {
+          editor.value = currentBaseCode;
+      }
+
+      updateLivePreview();
+    }
+
+    // Botones del panel de editor
+    document.getElementById('btn-reset-plantilla').onclick = function() {
+      if(confirm("¿Estás seguro? Perderás todos los cambios actuales en esta unidad y volverás a la plantilla original limpia.")) {
+          showingSolution = false;
+          const btnSol = document.getElementById("btn-ver-solucion");
+          if(btnSol.style.display !== 'none') {
+             btnSol.textContent = '👁️ Ver Solución Oficial';
+             btnSol.className = 'btn btn-toggle-sol';
+          }
+          const editor = document.getElementById("web-editor");
+          editor.value = currentBaseCode;
+          updateLivePreview();
+          // Forzar guardado para sobreescribir cache local
+          localStorage.setItem('webPlatform_draft_' + currentLessonIndex, currentBaseCode);
+      }
+    };
+
+    document.getElementById('btn-ver-solucion').onclick = function() {
+      const editor = document.getElementById("web-editor");
+      
+      if(!showingSolution) {
+          // Mostrar Solución. (No sobreescribimos el localStorage para no borrar el progreso del alumno)
+          showingSolution = true;
+          this.textContent = '🔙 Volver a mi Código';
+          this.className = 'btn btn-toggle-sol active';
+          
+          // Guardar caché rápida en variable temporal
+          this.dataset.tempCode = editor.value; 
+          editor.value = currentSolCode;
+      } else {
+          // Volver a lo que tenia el alumno
+          showingSolution = false;
+          this.textContent = '👁️ Ver Solución Oficial';
+          this.className = 'btn btn-toggle-sol';
+          editor.value = this.dataset.tempCode || currentBaseCode;
+      }
+      updateLivePreview();
+    };
+
+    /* =========================================================================
+       3. LIVE PREVIEW ENGINE (Actualización Iframe en vivo) & AUTOSAVE
+       ========================================================================= */
+    let saveTimeout = null;
+    let previewTimeout = null;
+    
+    function updateLivePreview() {
+        const code = document.getElementById("web-editor").value;
+        const iframe = document.getElementById("preview-frame");
+        
+        // Inyectar interceptor de Consola en el script antes del código del alumno
+        const injectedCode = `
+          <script>
+            (function(){
+              function isObj(obj) { return obj && typeof obj === 'object'; }
+              function stringify(arg) { 
+                try { return isObj(arg) ? JSON.stringify(arg) : String(arg); } 
+                catch(e) { return String(arg); } 
+              }
+              const oldLog = console.log;
+              console.log = function(...args) {
+                oldLog.apply(console, args);
+                window.parent.postMessage({ type: 'CONSOLE_LOG', msg: args.map(stringify).join(' ') }, '*');
+              };
+              const oldError = console.error;
+              console.error = function(...args) {
+                oldError.apply(console, args);
+                window.parent.postMessage({ type: 'CONSOLE_ERROR', msg: args.map(stringify).join(' ') }, '*');
+              };
+              window.onerror = function(msg, url, line) {
+                window.parent.postMessage({ type: 'CONSOLE_ERROR', msg: msg + " (Línea: " + line + ")" }, '*');
+                return false;
+              };
+            })();
+          <\/script>
+          ${code}
+        `;
+        
+        iframe.srcdoc = injectedCode;
+    }
+
+    // Escuchar los mensajes interceptados del Iframe
+    const consoleUl = document.getElementById("console-logs");
+    window.addEventListener("message", function(e) {
+        if (e.data && e.data.type === 'CONSOLE_LOG') {
+            const li = document.createElement("li");
+            li.textContent = "> " + e.data.msg;
+            consoleUl.appendChild(li);
+            consoleUl.scrollTop = consoleUl.scrollHeight;
+        } else if (e.data && e.data.type === 'CONSOLE_ERROR') {
+            const li = document.createElement("li");
+            li.className = "error";
+            li.textContent = "❌ " + e.data.msg;
+            consoleUl.appendChild(li);
+            consoleUl.scrollTop = consoleUl.scrollHeight;
+        }
+    });
+
+    document.getElementById("btn-clear-console").addEventListener('click', () => {
+        consoleUl.innerHTML = "";
+    });
+
+    document.getElementById("web-editor").addEventListener("input", function() {
+        const text = this.value;
+        const index = currentLessonIndex;
+        
+        // --- 1. Auto Live Preview ---
+        clearTimeout(previewTimeout);
+        previewTimeout = setTimeout(() => {
+            updateLivePreview();
+        }, 500); // 500ms debounce para rendimiento render
+
+        // --- 2. Auto Save ---
+        // Protegemos no guardar si está en modo "Ver Solución"
+        if(!showingSolution) {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('webPlatform_draft_' + index, text);
+                
+                const indicador = document.getElementById("save-indicator");
+                indicador.classList.add("show");
+                setTimeout(() => indicador.classList.remove("show"), 2000);
+            }, 800);
+        }
+    });
+
+    // Permitir tabulaciones nativas en el textarea
+    document.getElementById("web-editor").addEventListener("keydown", function(e) {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 2;
+      }
+    });
+
+    /* =========================================================================
+       4. DESCARGAR MI WEB
+       ========================================================================= */
+    document.getElementById("btn-descargar-web").onclick = function() {
+      const code = document.getElementById("web-editor").value;
+      const blob = new Blob([code], {type: "text/html;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = window.URL.createObjectURL(blob);
+      a.download = "index.html"; 
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      const prevText = this.textContent;
+      this.textContent = "✅ ¡Web Descargada!";
+      this.style.borderColor = "var(--accent-2)";
+      this.style.color = "var(--accent-2)";
+      setTimeout(() => {
+         this.textContent = prevText;
+         this.style.borderColor = "rgba(255,255,255,0.1)";
+         this.style.color = "var(--text-light)";
+      }, 3000);
+    };
+
+    /* =========================================================================
+       5. SISTEMA DE RESIZERS (Divisores de ventana)
+       ========================================================================= */
+    const resizerH = document.getElementById('resizer-h');
+    const upperPanel = document.getElementById('upper-panel');
+    let isResizingH = false;
+
+    resizerH.addEventListener('mousedown', () => {
+      isResizingH = true;
+      document.body.style.cursor = 'row-resize';
+      document.getElementById("preview-frame").style.pointerEvents = 'none';
+    });
+
+    const resizerV = document.getElementById('resizer-v');
+    const editorPanel = document.getElementById('editor-panel');
+    let isResizingV = false;
+
+    resizerV.addEventListener('mousedown', () => {
+      isResizingV = true;
+      document.body.style.cursor = 'col-resize';
+      document.getElementById("preview-frame").style.pointerEvents = 'none';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isResizingH) {
+        let newHeight = e.clientY - upperPanel.getBoundingClientRect().top;
+        if(newHeight > 100 && newHeight < window.innerHeight - 150) {
+          upperPanel.style.height = newHeight + 'px';
+          upperPanel.style.flex = 'none';
+        }
+      }
+      if (isResizingV) {
+        let newWidth = e.clientX - editorPanel.getBoundingClientRect().left;
+        if(newWidth > 150 && newWidth < window.innerWidth - 200) {
+          editorPanel.style.width = newWidth + 'px';
+          editorPanel.style.flex = 'none';
+        }
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if(isResizingH || isResizingV) {
+        isResizingH = false;
+        isResizingV = false;
+        document.body.style.cursor = 'default';
+        document.getElementById("preview-frame").style.pointerEvents = 'auto';
+      }
+    });
+
+    /* =========================================================================
+       6. SISTEMA DE COLLAPSE (Alternar Paneles)
+       ========================================================================= */
+    const sidebarEl = document.querySelector('.sidebar');
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+        sidebarEl.classList.toggle('collapsed');
+        this.style.opacity = sidebarEl.classList.contains('collapsed') ? '0.5' : '1';
+    });
+
+    const upperPanelEl = document.getElementById('upper-panel');
+    const resizerHEl = document.getElementById('resizer-h');
+    document.getElementById('toggle-theory').addEventListener('click', function() {
+        upperPanelEl.classList.toggle('collapsed');
+        resizerHEl.classList.toggle('hidden');
+        this.textContent = upperPanelEl.classList.contains('collapsed') ? '▶️' : '🔽';
+    });
+
+    const previewPanelEl = document.getElementById('preview-panel');
+    const resizerVEl = document.getElementById('resizer-v');
+    document.getElementById('toggle-preview').addEventListener('click', function() {
+        previewPanelEl.classList.toggle('collapsed');
+        resizerVEl.classList.toggle('hidden');
+        this.style.opacity = previewPanelEl.classList.contains('collapsed') ? '0.5' : '1';
+    });
+
+    /* =========================================================================
+       7. SIMULADOR DE DISPOSITIVO (Responsive Tester)
+       ========================================================================= */
+    const frame = document.getElementById("preview-frame");
+    const btnDesktop = document.getElementById("btn-device-desktop");
+    const btnMobile = document.getElementById("btn-device-mobile");
+
+    btnMobile.addEventListener('click', () => {
+        frame.className = "mobile-mode";
+        btnDesktop.style.color = "#94a3b8";
+        btnMobile.style.color = "#334155";
+    });
+
+    btnDesktop.addEventListener('click', () => {
+        frame.className = "desktop-mode";
+        btnDesktop.style.color = "#334155";
+        btnMobile.style.color = "#94a3b8";
+    });
+
+    window.addEventListener('hashchange', () => {
+        const hashIndex = getLessonIndexFromHash();
+        if (hashIndex !== null && hashIndex !== currentLessonIndex) {
+          loadLesson(hashIndex);
+        }
+    });
+
+    // INICIO
+    loadLesson(getInitialLessonIndex()); 
+
+  </script>
+  <script src="./Plataforma_Web.mobile.js"></script>
+</body>
+</html>

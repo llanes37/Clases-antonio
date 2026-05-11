@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UT2 · Plantilla CSS Rellenable (Ejemplo)</title>
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║         🧑‍🏫 CLASE CSS · PLANTILLA GUIADA (RELLENABLE)           ║
+  ║         Autor: Joaquín — Nivel: iniciación                       ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  Convención de comentarios (Better Comments):
+    ! Importante   → idea clave
+    ? Nota         → aclaración útil
+    * Ejemplo      → fragmento de referencia
+    TODO Alumno    → tarea concreta que tú completas
+    ✅ Solución     → propuesta (comentada) para comparar
+
+  Objetivo de UT2 (CSS):
+    - Ver un CSS FÁCIL aplicado a un HTML ya conocido (UT1).
+    - Ir de menos a más: globales → colores → tipografía → modelo de caja.
+    - Practicar escribiendo reglas reales en esta misma plantilla.
+    - Terminar con un mini-portfolio (de UT1) MEJORADO con CSS.
+  -->
+
+  <!-- ? Opción A (recomendada): hoja externa -->
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+
+  <style>
+    /* ! Opción B (para clase): CSS interno
+       Escribe aquí tus reglas y guarda para ver cambios en Live Server. */
+
+    /* ──────────────────────────────────────────────────────────────
+       1) ESTILOS GLOBALES (se aplican a toda la página)
+       Estructura de una regla:
+         selector {
+           propiedad: valor;
+         }
+       ────────────────────────────────────────────────────────────── */
+    body{
+      /* TODO Alumno: define tu estilo base del documento:
+         - font-family: Arial, sans-serif;
+         - background-color: (un gris muy claro)
+         - color: (texto gris oscuro)
+         - margin: 0;  padding: 0;
+      */
+    }
+    /* ✅ Solución (COMPARA, no es obligatorio)
+    body{
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color:#333;
+      margin:0; padding:0;
+    }
+    */
+
+    /* ──────────────────────────────────────────────────────────────
+       Encabezado + navegación
+       ────────────────────────────────────────────────────────────── */
+    header{
+      /* TODO Alumno: prueba un fondo oscuro, texto blanco y centrado
+         - background: #333; color:#fff; text-align:center; padding:20px;
+      */
+    }
+    nav ul{
+      /* TODO Alumno:
+         - list-style: none; padding:0; margin:10px 0 0 0;
+      */
+    }
+    nav ul li{
+      /* TODO Alumno:
+         - display: inline; margin-right: 15px;
+      */
+    }
+    nav ul li a{
+      /* TODO Alumno:
+         - color:#fff; text-decoration:none;
+      */
+    }
+    nav ul li a:hover{
+      /* TODO Alumno:
+         - text-decoration: underline;
+      */
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       Estilo común para secciones: caja blanca con borde y sombra suave
+       ────────────────────────────────────────────────────────────── */
+    section{
+      /* TODO Alumno:
+         - margin:20px; padding:20px; background:#fff;
+         - border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0,0,0,.08);
+      */
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       2) COLORES (cajas sencillas)
+       ────────────────────────────────────────────────────────────── */
+    .caja-roja{
+      /* TODO Alumno:
+         - background:red; color:#fff; padding:10px; margin-bottom:10px; border-radius:5px;
+      */
+    }
+    .caja-azul{
+      /* TODO Alumno: igual que la roja, pero azul */
+    }
+    .caja-verde{
+      /* TODO Alumno: igual que la roja, pero verde */
+    }
+    /* ✅ Solución de ejemplo
+    .caja-roja{ background:#ef4444; color:#fff; padding:10px; margin-bottom:10px; border-radius:6px; }
+    .caja-azul{ background:#3b82f6; color:#fff; padding:10px; margin-bottom:10px; border-radius:6px; }
+    .caja-verde{ background:#22c55e; color:#fff; padding:10px; margin-bottom:10px; border-radius:6px; }
+    */
+
+    /* ──────────────────────────────────────────────────────────────
+       3) TIPOGRAFÍA (fuentes y tamaños)
+       ────────────────────────────────────────────────────────────── */
+    .tipografia-courier{
+      /* TODO Alumno: font-family:'Courier New', Courier, monospace; font-size:20px; */
+    }
+    .tipografia-verdana{
+      /* TODO Alumno: font-family: Verdana, sans-serif; font-size:18px; */
+    }
+    .resaltado{
+      /* TODO Alumno: background:yellow; font-weight:bold; */
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       4) MODELO DE CAJA (margin, padding, border, background)
+       ────────────────────────────────────────────────────────────── */
+    .modelo-caja{
+      /* TODO Alumno:
+         - border:2px solid #000; padding:20px; margin:10px; background:#f9f9f9;
+      */
+    }
+    .borde-azul{
+      /* TODO Alumno: cambia solo el color del borde (border-color:#2563eb;) */
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       5) (Opcional) Pseudoclases de práctica
+       ────────────────────────────────────────────────────────────── */
+    a:hover{ /* TODO Alumno: cambia color o subraya el enlace al pasar el ratón */ }
+    input:focus{ /* TODO Alumno: añade un borde de color cuando el input recibe foco */ }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado con menú -->
+  <header>
+    <h1>UT2 · Plantilla CSS (rellenable)</h1>
+    <nav>
+      <ul>
+        <li><a href="#introduccion">Introducción</a></li>
+        <li><a href="#colores">Colores</a></li>
+        <li><a href="#tipografia">Tipografía</a></li>
+        <li><a href="#modelo-caja">Modelo de Caja</a></li>
+        <li><a href="#mini-proyecto">Mini proyecto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 1) INTRODUCCIÓN -->
+  <section id="introduccion">
+    <h2>Introducción a CSS</h2>
+    <p>CSS sirve para dar estilo al HTML: colores, fuentes, tamaños, márgenes, etc. Aquí aplicarás reglas sencillas y visibles.</p>
+
+    <!-- ! Cómo se enlaza CSS externo
+         * Ejemplo (en <head>): <link rel="stylesheet" href="styles.css">
+       ? En proyectos reales, usa SIEMPRE hoja externa. Aquí practicamos con <style> por comodidad. -->
+
+    <!-- TODO Alumno:
+         1) Crea un párrafo nuevo debajo con el texto: "Soy un párrafo de prueba".
+         2) Dale color al texto (color) y un tamaño de 18px (font-size) SOLO a ese párrafo.
+            Pista: ponle una clase (ej: .parrafo-prueba) y dale ese estilo en el CSS. -->
+  </section>
+
+  <!-- 2) COLORES -->
+  <section id="colores">
+    <h2>Colores en CSS</h2>
+    <p>Propiedades clave: <code>background-color</code> (fondo) y <code>color</code> (texto). Practica con tres cajas:</p>
+
+    <div class="caja-roja">Caja con fondo rojo</div>
+    <div class="caja-azul">Caja con fondo azul</div>
+    <div class="caja-verde">Caja con fondo verde</div>
+
+    <!-- * Explicación rápida:
+         - padding: espacio interno (más "aire" dentro de la caja)
+         - margin: espacio externo (separación entre cajas)
+         - border-radius: esquinas redondeadas -->
+
+    <!-- TODO Alumno:
+         1) Crea una cuarta caja "caja-amarilla" con fondo amarillo y texto negro.
+         2) Crea una "caja-personal" usando un color HEX (ej: #ff6b6b) o rgb(…).
+         3) Aumenta solo el padding de "caja-personal" a 20px para notar el cambio. -->
+  </section>
+
+  <!-- 3) TIPOGRAFÍA -->
+  <section id="tipografia">
+    <h2>Tipografía</h2>
+    <p class="tipografia-courier">Texto en Courier (20px).</p>
+    <p class="tipografia-verdana">Texto en Verdana (18px).</p>
+    <p class="resaltado">Este texto está resaltado con fondo amarillo.</p>
+
+    <!-- ? Nota:
+         - font-family cambia la fuente
+         - font-size cambia el tamaño
+         - font-weight:bold pone negrita -->
+
+    <!-- TODO Alumno:
+         1) Crea un párrafo con la fuente "Georgia" y tamaño 22px.
+         2) Crea otro párrafo con tamaño 14px y color gris (#666) para simular un "texto secundario".
+         3) (Opcional) Cambia el h2 de esta sección a 24px usando una regla específica para #tipografia h2. -->
+  </section>
+
+  <!-- 4) MODELO DE CAJA -->
+  <section id="modelo-caja">
+    <h2>Modelo de Caja</h2>
+    <p>Todo elemento es una caja con: <strong>contenido</strong>, <strong>padding</strong>, <strong>border</strong> y <strong>margin</strong>.</p>
+
+    <div class="modelo-caja">Caja 1: padding 20px, borde sólido, fondo claro.</div>
+
+    <!-- TODO Alumno:
+         1) Duplica la caja anterior y añádele la clase .borde-azul para ver el borde azul.
+         2) Crea "modelo-caja-grande" con padding 40px y aplícalo a una tercera caja.
+         3) Pon margin-top: 20px a la tercera caja para separar más. -->
+  </section>
+
+  <!-- 5) MINI PROYECTO: CSS aplicado al Portfolio de UT1 -->
+  <section id="mini-proyecto" aria-labelledby="h-proyecto">
+    <h2 id="h-proyecto">Mini Proyecto · Portfolio con CSS</h2>
+
+    <p>
+      Ya sabes aplicar <strong>colores</strong>, <strong>tipografía</strong> y el
+      <strong>modelo de caja</strong>. Ahora mejora el
+      <em>Portfolio Personal</em> que hiciste en HTML (UT1).
+    </p>
+
+    <ol>
+      <li>Abre tu <code>Proyecto_Portfolio.html</code> (UT1).</li>
+      <li>Crea <code>styles.css</code> y enlázalo con <code>&lt;link&gt;</code> en <code>&lt;head&gt;</code>.</li>
+      <li>Aplica estilos globales al <code>body</code> (fuente, fondo y color de texto).</li>
+      <li>Dale un fondo oscuro al <code>header</code> y pon el menú en horizontal.</li>
+      <li>Sección <em>Sobre mí</em>: caja blanca con sombra suave.</li>
+      <li><em>Proyectos</em>: tarjetas con borde y separación.</li>
+      <li>Galería: imágenes en fila con borde fino y pequeño margen.</li>
+      <li>Formulario: etiquetas en bloque y <em>padding</em> en los campos.</li>
+      <li>Footer: fondo gris y enlaces centrados.</li>
+    </ol>
+
+    <!-- ? Nota:
+         No busques un diseño complejo. Lo importante es ver cómo CSS transforma el HTML. -->
+
+    <!-- TODO Alumno:
+         1) Copia estilos de esta plantilla y adáptalos a tu portfolio.
+         2) Cambia colores o fuentes para darle tu identidad. -->
+  </section>
+
+</body>
+</html>

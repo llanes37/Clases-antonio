@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Página Web Completa para Alumnos · Plantilla de Clase</title>
+
+  <!--
+    ─────────────────────────────────────────────────────────────────────
+    🧑‍🏫 PLANTILLA DOCENTE (solo HTML) · “código explicado + ejercicios”
+    ─────────────────────────────────────────────────────────────────────
+    Cómo leer los comentarios (compatible con Better Comments):
+      - !  Importante / alerta conceptual
+      - ?  Nota / aclaración
+      - *  Ejemplo / recomendación de estilo
+      - TODO Alumno: lo que el alumno debe implementar
+      - ✅ Solución: propuesta (COMENTADA: descoméntala en directo si hace falta)
+
+    Uso en directo:
+      1) Abre con Live Server (recarga al guardar).
+      2) Explica cada bloque usando los comentarios.
+      3) Pide al alumno que resuelva los "TODO".
+      4) Muestra las soluciones descomentando si es necesario.
+  -->
+
+  <style>
+    /* Estética mínima para proyectar sin distraer del código */
+    :root { --bg:#f7f9fc; --ink:#111; --muted:#5b6470; --card:#fff; --border:#e5e7eb; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--ink); line-height:1.6; }
+    header, main, footer { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    header { position: sticky; top: 0; background:#fff; border-bottom:1px solid var(--border); z-index: 10; }
+    h1,h2,h3 { margin: .4em 0; }
+    nav ul { display:flex; flex-wrap:wrap; gap:8px; padding:0; margin:6px 0 0; list-style:none; }
+    nav a { display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; text-decoration:none; color:var(--ink); }
+    nav a:hover { background:#111; color:#fff; border-color:#111; }
+    section { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin:16px 0; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { border:1px solid var(--border); padding:8px; text-align:left; }
+    footer nav ul { justify-content: flex-start; }
+    .muted { color: var(--muted); }
+    .note { font-size: .95rem; color: var(--muted); }
+    img, video, audio { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+
+  <!--
+    ! ENCABEZADO
+    Explicación:
+      - Un <header> semántico con un <h1> y navegación <nav>.
+      - La navegación usa enlaces internos (#id) a secciones reales del documento.
+    * Recomendación:
+      - Mantener IDs cortos, únicos y descriptivos.
+  -->
+  <header>
+    <h1>Página Web Completa para Alumnos</h1>
+    <p class="muted">Plantilla de clase: explica + construye + ejercita (Live Server)</p>
+
+    <nav aria-label="Índice de secciones">
+      <ul>
+        <li><a href="#introduccion">Introducción</a></li>
+        <li><a href="#seccion-tablas">Tablas</a></li>
+        <li><a href="#seccion-imagenes">Imágenes</a></li>
+        <li><a href="#seccion-formularios">Formularios</a></li>
+        <li><a href="#seccion-multimedia">Multimedia</a></li>
+      </ul>
+    </nav>
+
+    <!-- TODO Alumno:
+      Añade un enlace adicional “Contacto” que baje al pie de página (#contacto).
+      Pista: crea un id="contacto" en el <footer>.
+    -->
+    <!-- ✅ Solución (descomentar si quieres mostrarla)
+    <ul>
+      <li style="display:none"><a href="#contacto">Contacto</a></li>
+    </ul>
+    -->
+  </header>
+
+  <main>
+
+    <!--
+      ! SECCIÓN: INTRODUCCIÓN
+      Objetivo didáctico:
+        - Explicar qué es HTML y su rol (estructura).
+        - Practicar títulos, párrafos y listas (<ul> y <ol>).
+      * Buenas prácticas:
+        - Un solo <h1> por documento; jerarquía con <h2>, <h3>…
+        - Listas con contenido breve y coherente.
+    -->
+    <section id="introduccion" aria-labelledby="h-intro">
+      <h2 id="h-intro">Introducción a HTML</h2>
+      <p>
+        HTML define la <strong>estructura</strong> de una página web. En esta sección vemos
+        títulos, párrafos y dos tipos de listas.
+      </p>
+
+      <h3>Lista desordenada (ul)</h3>
+      <ul>
+        <li>HTML: estructura</li>
+        <li>CSS: presentación</li>
+        <li>JavaScript: interactividad</li>
+      </ul>
+
+      <h3>Lista ordenada (ol)</h3>
+      <ol>
+        <li>Planificar la página</li>
+        <li>Escribir el HTML</li>
+        <li>Publicar</li>
+      </ol>
+
+      <!-- TODO Alumno:
+        1) Debajo de este comentario, añade un párrafo que incluya un enlace externo
+           que se abra en nueva pestaña (usa target="_blank" y rel="noopener").
+        2) Crea una lista <dl> con 2 definiciones: “Frontend” y “Backend”.
+      -->
+      <!-- ✅ Solución (COMENTADA)
+      <p class="note">
+        Recurso: <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank" rel="noopener">MDN HTML</a>
+      </p>
+      <dl>
+        <dt>Frontend</dt><dd>Parte visible/interactiva del sitio.</dd>
+        <dt>Backend</dt><dd>Lógica del servidor, datos, APIs.</dd>
+      </dl>
+      -->
+    </section>
+
+    <!--
+      ! SECCIÓN: TABLAS
+      Objetivo didáctico:
+        - Aprender la estructura correcta de tablas: caption, thead, tbody.
+      * Buenas prácticas:
+        - Tablas solo para datos tabulares (no para maquetar).
+        - Usar <th scope="col/row"> para accesibilidad.
+    -->
+    <section id="seccion-tablas" aria-labelledby="h-tablas">
+      <h2 id="h-tablas">Uso de Tablas en HTML</h2>
+      <p class="note">Ejemplo base con inventario simple.</p>
+
+      <table>
+        <caption>Inventario</caption>
+        <thead>
+          <tr>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Teclado</th>
+            <td>19,99 €</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <th scope="row">Ratón</th>
+            <td>9,50 €</td>
+            <td>30</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- TODO Alumno:
+        1) Añade una fila para “Auriculares” (29,00 €, 8 uds) usando <th scope="row">.
+        2) Añade <tfoot> con una fila que muestre “Total items” y la suma (12 + 30 + 8).
+      -->
+      <!-- ✅ Solución (COMENTADA)
+      <tbody>
+        <tr>
+          <th scope="row">Auriculares</th>
+          <td>29,00 €</td>
+          <td>8</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row">Total items</th>
+          <td></td>
+          <td>50</td>
+        </tr>
+      </tfoot>
+      -->
+    </section>
+
+    <!--
+      ! SECCIÓN: IMÁGENES
+      Objetivo didáctico:
+        - Insertar imágenes correctamente y usar atributo alt (accesibilidad/SEO).
+      * Buenas prácticas:
+        - Rutas relativas (./img/foto.jpg) cuando trabajes en proyecto local.
+        - No usar width/height fijos si no hace falta; que sean responsivas.
+    -->
+    <section id="seccion-imagenes" aria-labelledby="h-img">
+      <h2 id="h-img">Integración de Imágenes en HTML</h2>
+
+      <p class="note">Ejemplo con placeholder (recuerda usar <code>alt</code> descriptivo).</p>
+      <img src="https://via.placeholder.com/480x240" alt="Imagen de ejemplo rectangular">
+
+      <!-- TODO Alumno:
+        1) Descarga una imagen y colócala en /img/foto.jpg.
+        2) Insértala con alt descriptivo y limita su ancho al 50% usando style="max-width:50%".
+        3) Añade <figure> y <figcaption> con un pie de foto.
+      -->
+      <!-- ✅ Solución (COMENTADA)
+      <figure>
+        <img src="img/foto.jpg" alt="Retrato del autor trabajando en su portátil" style="max-width:50%;">
+        <figcaption>Mi primera imagen local con pie de foto.</figcaption>
+      </figure>
+      -->
+    </section>
+
+    <!--
+      ! SECCIÓN: FORMULARIOS
+      Objetivo didáctico:
+        - Crear un formulario accesible con label/for, required y tipos semánticos.
+      * Buenas prácticas:
+        - Validación nativa (type="email", required, pattern, min/max).
+        - Agrupar con <fieldset> y <legend> cuando hay bloques lógicos.
+    -->
+    <section id="seccion-formularios" aria-labelledby="h-form">
+      <h2 id="h-form">Formularios en HTML</h2>
+
+      <!-- * Ejemplo mínimo -->
+      <form action="#" method="post" aria-describedby="ayuda-form" onsubmit="alert('En esta unidad no enviamos datos.'); return false;">
+        <p id="ayuda-form" class="note">Campos con * son obligatorios.</p>
+
+        <label for="nombre">Nombre *</label><br>
+        <input id="nombre" name="nombre" type="text" required placeholder="Tu nombre"><br><br>
+
+        <label for="email">Correo electrónico *</label><br>
+        <input id="email" name="email" type="email" required placeholder="tucorreo@ejemplo.com"><br><br>
+
+        <label for="comentarios">Comentarios</label><br>
+        <textarea id="comentarios" name="comentarios" rows="4" cols="30" placeholder="Escribe aquí..."></textarea><br><br>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <!-- TODO Alumno:
+        1) Añade un campo teléfono (type="tel") con pattern para España: +34 600000000 o 600000000.
+           Pista: pattern="\\+?34?[\\s-]?[0-9]{9}"
+        2) Añade un <fieldset> “Preferencias” con un <legend> y 2 checkboxes (Boletín, Acepto condiciones).
+        3) Cambia el action="#" por un ancla interno (#introduccion) y explica por qué en esta unidad no enviamos a servidor.
+      -->
+      <!-- ✅ Solución (COMENTADA)
+      <label for="tel">Teléfono</label><br>
+      <input id="tel" name="tel" type="tel" pattern="\\+?34?[\\s-]?[0-9]{9}" placeholder="+34 600000000"><br><br>
+
+      <fieldset>
+        <legend>Preferencias</legend>
+        <label><input type="checkbox" name="boletin"> Suscribirme al boletín</label><br>
+        <label><input type="checkbox" name="condiciones" required> Acepto condiciones *</label>
+      </fieldset>
+
+      <!-- action="#introduccion" para permanecer en la misma página en esta unidad -->
+      -->
+    </section>
+
+    <!--
+      ! SECCIÓN: MULTIMEDIA
+      Objetivo didáctico:
+        - Insertar vídeo y audio con etiquetas nativas y fuentes/formatos.
+      * Buenas prácticas:
+        - Añadir <track> para subtítulos cuando sea posible.
+        - Usar poster en video local y varios <source> si tienes diferentes formatos.
+    -->
+    <section id="seccion-multimedia" aria-labelledby="h-media">
+      <h2 id="h-media">Uso de Multimedia en HTML</h2>
+
+      <h3>Video</h3>
+      <video controls width="100%">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Tu navegador no soporta video.
+      </video>
+
+      <h3>Audio</h3>
+      <audio controls>
+        <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+      </audio>
+
+      <!-- TODO Alumno:
+        1) Inserta un video local en /media/intro.mp4 con poster="/img/portada.png".
+        2) Añade subtítulos: <track kind="subtitles" src="/media/subs.vtt" srclang="es" label="Español">.
+        3) Añade controles “autoplay muted loop” y explica por qué ‘muted’ suele ser necesario para autoplay.
+      -->
+      <!-- ✅ Solución (COMENTADA)
+      <video controls poster="img/portada.png" width="100%" autoplay muted loop>
+        <source src="media/intro.mp4" type="video/mp4">
+        <track kind="subtitles" src="media/subs.vtt" srclang="es" label="Español">
+      </video>
+      -->
+    </section>
+<section id="mini-proyecto" aria-labelledby="h-proyecto">
+  <h2 id="h-proyecto">Proyecto Final · Mi Portfolio Personal</h2>
+
+  <p>
+    Ahora que has practicado las secciones de HTML, el reto es crear tu propio
+    <strong>Portfolio Web</strong>.
+  </p>
+
+  <ol>
+    <li>Crea un <code>&lt;header&gt;</code> con tu nombre y un menú de navegación.</li>
+    <li>Añade una sección <em>Sobre mí</em> con un párrafo breve.</li>
+    <li>Crea una sección <em>Proyectos</em> con una lista o tabla de tus trabajos.</li>
+    <li>Añade una galería de imágenes (3 fotos con <code>&lt;figure&gt;</code> y <code>&lt;figcaption&gt;</code>).</li>
+    <li>Incluye un formulario de contacto con nombre, email y mensaje.</li>
+    <li>Finaliza con un <code>&lt;footer&gt;</code> con enlaces a tus redes sociales.</li>
+  </ol>
+
+  <!-- ? Nota:
+       El objetivo es que lo construyas paso a paso con lo aprendido.
+       Si necesitas ayuda, pide apoyo a la Inteligencia Artificial con el prompt siguiente.
+  -->
+
+  <details>
+    <summary>💡 Usa la Inteligencia Artificial</summary>
+    <p>Puedes pedir a la IA que te genere un esqueleto de portfolio. Cópialo, ejecútalo con Live Server y personalízalo.</p>
+
+    <button onclick="copyFrom('promptPortfolio')">📋 Copiar prompt</button>
+    <textarea id="promptPortfolio" rows="7" style="width:100%;font-family:monospace;">
+Genérame un archivo HTML básico para un portfolio personal que incluya:
+1. Un header con mi nombre y un menú de navegación.
+2. Una sección "Sobre mí" con un párrafo breve.
+3. Una sección "Proyectos" con una lista de trabajos.
+4. Una galería con 3 imágenes dentro de figure + figcaption.
+5. Un formulario de contacto con nombre, email y mensaje.
+6. Un footer con enlaces a mis redes sociales.
+Devuélveme solo el HTML, sin CSS ni JavaScript.
+    </textarea>
+    <small>👉 Luego adapta los textos, enlaces e imágenes con tus propios datos.</small>
+  </details>
+</section>
+
+<script>
+  function copyFrom(id){
+    const el = document.getElementById(id);
+    el.select();
+    document.execCommand('copy');
+    alert("Prompt copiado ✔");
+  }
+</script>
+
+<!-- #endregion PROYECTO FINAL -->
+
+  </main>
+
+  <!--
+    ! PIE DE PÁGINA
+    Objetivo didáctico:
+      - Cerrar la estructura semántica.
+      - Añadir navegación secundaria de retorno.
+    TODO Alumno:
+      - Crea un id="contacto" aquí y añade un pequeño “mailto:” para practicar enlaces especiales.
+  -->
+  <footer id="contacto" aria-labelledby="h-foot">
+    <h2 id="h-foot">Pie de página</h2>
+    <p>Creado por [Nombre del alumno].</p>
+    <nav aria-label="Navegación secundaria">
+      <ul>
+        <li><a href="#introduccion">Inicio</a></li>
+        <li><a href="#seccion-tablas">Tablas</a></li>
+        <li><a href="#seccion-imagenes">Imágenes</a></li>
+        <li><a href="#seccion-formularios">Formularios</a></li>
+        <li><a href="#seccion-multimedia">Multimedia</a></li>
+      </ul>
+    </nav>
+
+    <!-- ✅ Solución opcional (COMENTADA)
+    <p class="note">Contacto: <a href="mailto:profesor@ejemplo.com">profesor@ejemplo.com</a></p>
+    -->
+  </footer>
+
+</body>
+</html>

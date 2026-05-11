@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UT5 · Clase Final con IA — Plantilla de Portfolio (HTML + CSS + Bootstrap + JS)</title>
+
+  <!--
+  =====================================================================
+  🧠 UT5 — CLASE FINAL CON IA · PLANTILLA COMENTADA (LISTA PARA USAR)
+  =====================================================================
+  Guía de lectura de comentarios (estilo Better Comments):
+    !  Importante / idea clave
+    ?  Nota / aclaración
+    *  Ejemplo / recomendación
+    TODO Alumno: tarea concreta que debes completar tú
+
+  Objetivo de esta plantilla:
+    - Que puedas arrancar un portfolio COMPLETO (HTML + CSS + Bootstrap + JS)
+      con comentarios que explican QUÉ hace cada parte y POR QUÉ se usa.
+    - Que el .html sea 100% funcional desde el primer minuto (Live Server).
+    - Que te sirva de referencia mientras lo personalizas con tu contenido.
+
+  Cómo usarla:
+    1) Abre este archivo con Live Server.
+    2) Recorre las secciones y lee los comentarios (no salen en pantalla).
+    3) Personaliza textos, imágenes, enlaces y colores.
+    4) Completa los "TODO Alumno" donde veas oportunidades de mejora.
+  =====================================================================
+  -->
+
+  <!-- ! Bootstrap 5 (CSS) desde CDN: aporta estilos y el sistema de componentes -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- ? Iconos de Bootstrap (opcional, usados en botones como WhatsApp o enviar) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!--
+    ! Estilos propios en <style> para que todo esté en un único archivo (demo).
+      En producción, conviene extraerlos a styles.css, pero aquí lo dejamos
+      inline para que sea fácil de estudiar, copiar y modificar.
+  -->
+  <style>
+    /* ====================================================================
+       🎨 VARIABLES DE COLOR (LIGHT/DARK) + DETALLES ESTÉTICOS
+       --------------------------------------------------------------------
+       ? Usamos variables CSS para poder alternar tema claro/oscuro
+         cambiando solo el atributo data-theme en <body> desde JS.
+    ==================================================================== */
+    :root{
+      --bg: #f6f7fb;         /* fondo base (claro) */
+      --ink: #111827;        /* color de texto principal */
+      --muted: #6b7280;      /* texto secundario */
+      --accent: #2563eb;     /* color de acento (botones, detalles) */
+      --surface: #ffffff;    /* tarjetas/fondos */
+      --surface-2: #f3f4f6;  /* zonas en relieve sutil */
+      --ring: rgba(37, 99, 235, .35); /* foco/halo accesible */
+    }
+    /* ! Tema oscuro: redefinimos variables cuando data-theme="dark" */
+    body[data-theme="dark"]{
+      --bg: #0b1220;
+      --ink: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --surface: #0f172a;
+      --surface-2: #111827;
+      --ring: rgba(96, 165, 250, .4);
+    }
+
+    /* Base tipográfica y fondo global */
+    html, body{ height:100%; }
+    body{
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Utilidades mínimas propias (complementan a Bootstrap) */
+    .text-muted{ color: var(--muted) !important; }
+    .bg-surface   { background: var(--surface) !important; }
+    .bg-surface-2 { background: var(--surface-2) !important; }
+    .ring{
+      outline: 3px solid var(--ring);
+      outline-offset: 2px;
+    }
+
+    /* HERO con degradado personalizado que se superpone a bg oscuro de Bootstrap */
+    .bg-gradient-primary{
+      background: linear-gradient(135deg, #0ea5e9, var(--accent));
+      color: white;
+    }
+    .pill{
+      background: rgba(255,255,255,.15);
+      color: #fff;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+    }
+
+    /* Tarjetas: sutiles y redondeadas (además de lo que ya da Bootstrap) */
+    .card{
+      border-radius: 1rem;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 6px 18px rgba(0,0,0,.06);
+    }
+    .card img{ border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
+
+    /* Modal de galería: sin bordes para centrar la atención en la imagen */
+    #imgModal .modal-content{
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    #imgModal img{ display:block; width:100%; height:auto; border-radius: 1rem; }
+
+    /* Transiciones suaves para el cambio de tema */
+    *{ transition: background-color .2s linear, color .2s linear, border-color .2s linear; }
+  </style>
+</head>
+
+<!--
+  ? data-theme controla la paleta (light/dark). Lo alternamos desde JS.
+  * Empieza en "light"; si hay una preferencia guardada en localStorage,
+    el JS la aplicará al cargar.
+-->
+<body data-theme="light">
+
+  <!-- ================================================================
+    HEADER + NAVBAR (fija, responsive y con botón de tema)
+    ----------------------------------------------------------------
+    * navbar-expand-lg: el menú se expande a partir de pantallas "lg"
+    * navbar-dark bg-dark: esquema oscuro para el header
+    * sticky-top: el header queda pegado arriba al hacer scroll
+  ================================================================ -->
+  <header class="sticky-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <!-- * Branding: enlace que lleva al hero (#home) -->
+        <a class="navbar-brand fw-bold" href="#home">Mi Portfolio</a>
+
+        <!-- * Botón hamburguesa (visible en móviles) que abre/cierra el menú colapsable -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-label="Abrir navegación">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- * Menú colapsable: lista de enlaces internos -->
+        <div id="nav" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto gap-2">
+            <li class="nav-item"><a class="nav-link" href="#home">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">Sobre mí</a></li>
+            <li class="nav-item"><a class="nav-link" href="#projects">Proyectos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#gallery">Galería</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+          </ul>
+
+          <!-- * Botón para alternar tema claro/oscuro -->
+          <button id="toggleTheme" class="btn btn-outline-light ms-3" type="button" title="Cambiar tema">
+            <i class="bi bi-moon-stars"></i> Tema
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================================================================
+    HERO / HOME
+    ----------------------------------------------------------------
+    * Sección de bienvenida con CTA (call to action) hacia Proyectos/Contacto
+    * Clase personalizada bg-gradient-primary + texto blanco
+  ================================================================ -->
+  <section id="home" class="py-5 bg-gradient-primary text-center">
+    <div class="container">
+      <h1 class="display-5 fw-bold">Hola, soy <span class="pill">Tu Nombre</span></h1>
+      <p class="lead mb-4">Desarrollador/a web — HTML · CSS · Bootstrap · JavaScript</p>
+
+      <!-- * Botones de acción; el tercero abre WhatsApp en una nueva pestaña -->
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <a href="#projects" class="btn btn-light btn-lg"><i class="bi bi-grid"></i> Ver proyectos</a>
+        <a href="#contact" class="btn btn-outline-light btn-lg"><i class="bi bi-send"></i> Contactar</a>
+        <a href="https://wa.me/34XXXXXXXXX" target="_blank" class="btn btn-success btn-lg">
+          <i class="bi bi-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+    SOBRE MÍ
+    ----------------------------------------------------------------
+    * Dos columnas: imagen + texto/habilidades
+  ================================================================ -->
+  <section id="about" class="py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-12 col-md-5">
+          <!-- * Imagen con borde redondeado y sombra suave -->
+          <img class="img-fluid rounded-4 shadow" src="https://via.placeholder.com/720x480" alt="Foto del autor">
+        </div>
+        <div class="col-12 col-md-7">
+          <h2 class="mb-3">Sobre mí</h2>
+          <p class="text-muted">
+            Me apasiona crear interfaces limpias y funcionales. Domino las bases
+            de HTML, CSS, Bootstrap y JavaScript, y sigo aprendiendo cada día.
+          </p>
+
+          <!-- * Badges de habilidades -->
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge text-bg-primary">HTML</span>
+            <span class="badge text-bg-success">CSS</span>
+            <span class="badge text-bg-dark">Bootstrap</span>
+            <span class="badge text-bg-warning text-dark">JavaScript</span>
+          </div>
+
+          <!-- TODO Alumno: cambia el texto por tu bio real y añade 2–3 badges extra -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+    PROYECTOS — grid de cards + filtro por palabra clave
+    ----------------------------------------------------------------
+    * Cada .project tiene data-tags para el buscador de arriba.
+  ================================================================ -->
+  <section id="projects" class="py-5 bg-surface-2">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <h2 class="m-0">Proyectos</h2>
+
+        <!-- * Input grande con icono; el JS filtrará por data-tags/título/texto -->
+        <div class="input-group input-group-lg w-auto">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input id="filterInput" type="text" class="form-control" placeholder="Filtra por palabra (ej. 'api', 'ui', 'js')">
+        </div>
+      </div>
+
+      <!-- * Rejilla responsiva (1/2/3 columnas según tamaño) -->
+      <div id="projectsGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col project" data-tags="html css ui">
+          <div class="card h-100">
+            <img class="card-img-top" src="https://picsum.photos/seed/p1/600/400" alt="Proyecto 1">
+            <div class="card-body">
+              <h5 class="card-title">Proyecto 1</h5>
+              <p class="card-text text-muted">Maquetación con HTML/CSS y componentes Bootstrap.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col project" data-tags="js api fetch">
+          <div class="card h-100">
+            <img class="card-img-top" src="https://picsum.photos/seed/p2/600/400" alt="Proyecto 2">
+            <div class="card-body">
+              <h5 class="card-title">Proyecto 2</h5>
+              <p class="card-text text-muted">Interacción con JavaScript y consumo de API.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col project" data-tags="bootstrap responsive ui">
+          <div class="card h-100">
+            <img class="card-img-top" src="https://picsum.photos/seed/p3/600/400" alt="Proyecto 3">
+            <div class="card-body">
+              <h5 class="card-title">Proyecto 3</h5>
+              <p class="card-text text-muted">Diseño responsive usando grid de Bootstrap.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TODO Alumno: duplica 2–3 cards y personalízalas con tus proyectos reales -->
+    </div>
+  </section>
+
+  <!-- ================================================================
+    GALERÍA — grid de imágenes + modal reutilizable
+    ----------------------------------------------------------------
+    * Las imágenes .gallery-item abren el modal #imgModal con su src
+  ================================================================ -->
+  <section id="gallery" class="py-5">
+    <div class="container">
+      <h2 class="mb-4">Galería</h2>
+      <div class="row g-3">
+        <div class="col-6 col-md-4">
+          <img class="img-fluid rounded gallery-item" src="https://picsum.photos/seed/g1/800/600" alt="Imagen 1 de la galería">
+        </div>
+        <div class="col-6 col-md-4">
+          <img class="img-fluid rounded gallery-item" src="https://picsum.photos/seed/g2/800/600" alt="Imagen 2 de la galería">
+        </div>
+        <div class="col-6 col-md-4">
+          <img class="img-fluid rounded gallery-item" src="https://picsum.photos/seed/g3/800/600" alt="Imagen 3 de la galería">
+        </div>
+      </div>
+
+      <!-- TODO Alumno: añade al menos 3 imágenes más y prueba el modal -->
+    </div>
+  </section>
+
+  <!-- * Modal reutilizable para mostrar imágenes en grande -->
+  <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <!-- ? La imagen se inserta dinámicamente desde JS -->
+        <img id="imgModalSrc" alt="Vista ampliada desde la galería">
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================
+    CONTACTO — formulario con validación + enlaces rápidos (mailto/WhatsApp)
+  ================================================================ -->
+  <section id="contact" class="py-5 bg-surface-2">
+    <div class="container">
+      <h2 class="mb-3">Contacto</h2>
+      <p class="text-muted">Completa el formulario o usa los accesos directos.</p>
+
+      <!--
+        ! Bootstrap validation:
+          - needs-validation + novalidate → controlamos validación desde JS
+          - was-validated (JS) → muestra estilos de éxito/error
+      -->
+      <form id="contactForm" class="col-12 col-md-8 col-lg-6 needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="c-name" class="form-label">Nombre</label>
+          <input id="c-name" name="name" type="text" class="form-control" required>
+          <div class="invalid-feedback">Introduce tu nombre.</div>
+        </div>
+        <div class="mb-3">
+          <label for="c-email" class="form-label">Email</label>
+          <input id="c-email" name="email" type="email" class="form-control" required>
+          <div class="invalid-feedback">Introduce un email válido.</div>
+        </div>
+        <div class="mb-3">
+          <label for="c-msg" class="form-label">Mensaje</label>
+          <textarea id="c-msg" name="msg" class="form-control" rows="4" minlength="10" required></textarea>
+          <div class="invalid-feedback">Escribe al menos 10 caracteres.</div>
+        </div>
+
+        <div class="d-flex gap-2 align-items-center flex-wrap">
+          <button class="btn btn-primary" type="submit"><i class="bi bi-send"></i> Enviar</button>
+          <a class="btn btn-outline-secondary" href="mailto:tuemail@correo.com">
+            <i class="bi bi-envelope"></i> Email
+          </a>
+          <a class="btn btn-success" target="_blank" href="https://wa.me/34XXXXXXXXX">
+            <i class="bi bi-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+      </form>
+
+      <!-- TODO Alumno: añade un campo "Asunto" opcional y valida longitud mínima -->
+    </div>
+  </section>
+
+  <!-- ================================================================
+    FOOTER — año dinámico desde JS
+  ================================================================ -->
+  <footer class="bg-dark text-white text-center p-4">
+    <div class="container">
+      <p class="m-0">&copy; <span id="year"></span> · Tu Nombre — Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ! Bootstrap 5 (JS) bundle: necesario para colapsar navbar, modal, etc. -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!--
+    ! Script propio inline para esta demo (en proyectos, extraer a app.js)
+      El código está seccionado y COMENTADO paso a paso para que puedas
+      entender exactamente qué hace cada bloque.
+  -->
+  <script>
+    /* ===================================================================
+       ⚙️ UTILIDADES INICIALES
+       ------------------------------------------------------------------- */
+
+    // 1) Mostrar AÑO actual en el footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 2) Referencias a elementos que usaremos varias veces
+    const body        = document.body;                        // * para alternar data-theme
+    const navCollapse = document.getElementById('nav');       // * contenedor colapsable del menú
+    const toggleTheme = document.getElementById('toggleTheme'); // * botón de tema
+
+    /* ===================================================================
+       🌗 TEMA CLARO/OSCURO con localStorage
+       -------------------------------------------------------------------
+       - Clave: 'portfolio-theme'
+       - Valor: 'light' | 'dark'
+    =================================================================== */
+    const THEME_KEY = 'portfolio-theme';
+
+    // ? Al cargar, intentamos aplicar la preferencia guardada
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    if(savedTheme === 'dark'){ body.setAttribute('data-theme', 'dark'); }
+
+    // * Al pulsar el botón, alternamos el atributo y guardamos preferencia
+    if(toggleTheme){
+      toggleTheme.addEventListener('click', () => {
+        const next = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', next);
+        localStorage.setItem(THEME_KEY, next);
+      });
+    }
+
+    /* ===================================================================
+       🧭 SCROLL SUAVE entre secciones desde el navbar
+       -------------------------------------------------------------------
+       - Interceptamos los clics en enlaces internos .nav-link
+       - Llamamos a scrollIntoView({ behavior: 'smooth' })
+       - Si el menú está abierto en móvil, lo cerramos
+    =================================================================== */
+    document.querySelectorAll('a.nav-link[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(!el) return;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // * Si el menú está desplegado (móvil), lo cerramos
+        if(navCollapse && navCollapse.classList.contains('show')){
+          new bootstrap.Collapse(navCollapse).hide();
+        }
+      });
+    });
+
+    /* ===================================================================
+       🔎 FILTRO DE PROYECTOS por palabra clave
+       -------------------------------------------------------------------
+       - Input #filterInput
+       - Filtramos tarjetas que NO contengan la consulta en:
+         * data-tags
+         * .card-title
+         * .card-text
+       - Ocultamos mostrando la clase d-none en su .col padre
+    =================================================================== */
+    const filterInput = document.getElementById('filterInput');
+    if(filterInput){
+      filterInput.addEventListener('input', () => {
+        const q = filterInput.value.trim().toLowerCase();
+        document.querySelectorAll('#projectsGrid .project').forEach(project => {
+          const col   = project.closest('.col'); // ? la columna contenedora
+          const tags  = (project.dataset.tags || '').toLowerCase();
+          const title = (project.querySelector('.card-title')?.textContent || '').toLowerCase();
+          const text  = (project.querySelector('.card-text')?.textContent || '').toLowerCase();
+          const match = !q || tags.includes(q) || title.includes(q) || text.includes(q);
+          col.classList.toggle('d-none', !match);
+        });
+      });
+    }
+
+    /* ===================================================================
+       🖼️ GALERÍA: MODAL DE IMAGEN
+       -------------------------------------------------------------------
+       - Al hacer clic en .gallery-item se abre #imgModal
+       - Reutilizamos SIEMPRE el mismo modal; solo cambiamos el src
+    =================================================================== */
+    const imgModal    = document.getElementById('imgModal');
+    const imgModalSrc = document.getElementById('imgModalSrc');
+    if(imgModal && imgModalSrc){
+      document.querySelectorAll('.gallery-item').forEach(img => {
+        img.addEventListener('click', () => {
+          imgModalSrc.src = img.src;                  // * insertamos la imagen pulsada
+          const modal = new bootstrap.Modal(imgModal);
+          modal.show();
+        });
+      });
+    }
+
+    /* ===================================================================
+       📨 VALIDACIÓN DE FORMULARIO (Bootstrap + API nativa)
+       -------------------------------------------------------------------
+       - El form tiene: needs-validation + novalidate
+       - checkValidity() devuelve true/false según los atributos HTML
+       - Si es válido: mostramos un alert de confirmación y reseteamos
+       - Añadimos was-validated para activar estilos de Bootstrap
+    =================================================================== */
+    const form = document.getElementById('contactForm');
+    if(form){
+      form.addEventListener('submit', (e) => {
+        if(!form.checkValidity()){
+          e.preventDefault();
+          e.stopPropagation();
+        } else {
+          e.preventDefault(); // * demo: no enviamos a servidor
+          alert('Formulario enviado correctamente ✅');
+          form.reset();
+        }
+        form.classList.add('was-validated');
+      });
+    }
+
+    /* TODO Alumno:
+       - Añade un botón "Volver arriba" que aparezca al hacer scroll y use window.scrollTo({top:0, behavior:'smooth'}).
+       - Mejora el filtro para aceptar múltiples palabras (separadas por espacios) y exigir que todas coincidan.
+    */
+  </script>
+</body>
+</html>

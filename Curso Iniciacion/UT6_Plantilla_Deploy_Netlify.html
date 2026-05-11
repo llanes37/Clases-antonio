@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi primera web publicada</title>
+  <meta name="description" content="Plantilla lista para publicar en Netlify: estructura clara, secciones básicas y recomendaciones de despliegue." />
+
+  <!-- Bootstrap (rápido y suficiente para empezar) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    :root { --bg: #f6f7fb; --ink:#111827; --muted:#6b7280; --accent:#2563eb; }
+    body { background: var(--bg); color: var(--ink); }
+    .text-muted { color: var(--muted) !important; }
+    .hero {
+      background: linear-gradient(135deg, rgba(37,99,235,.12), rgba(14,165,233,.10));
+      border: 1px solid rgba(15, 23, 42, .08);
+    }
+    .card { border: 1px solid rgba(15, 23, 42, .08); }
+    .badge-soft { background: rgba(37,99,235,.10); color: var(--accent); }
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus{ position:fixed; left:1rem; top:1rem; width:auto; height:auto; padding:.5rem .75rem; z-index:1080; background:#fff; border-radius:.5rem; }
+  </style>
+</head>
+
+<body>
+  <!-- Accesibilidad: enlace para saltar al contenido -->
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+
+  <header class="container py-4">
+    <nav class="d-flex flex-wrap align-items-center justify-content-between gap-2" aria-label="Navegación principal">
+      <a class="text-decoration-none fw-bold" href="#">
+        Mi Web
+      </a>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-sm btn-outline-primary" href="#proyectos">Proyectos</a>
+        <a class="btn btn-sm btn-outline-primary" href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="container pb-5">
+    <section class="hero rounded-4 p-4 p-md-5 mb-4">
+      <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-7">
+          <h1 class="fw-bold mb-2">Mi primera web publicada</h1>
+          <p class="text-muted mb-3">
+            Esta plantilla está pensada para <strong>descargar</strong>, renombrar como <code>index.html</code> y
+            <strong>publicar en Netlify</strong> en minutos.
+          </p>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge rounded-pill badge-soft">HTML</span>
+            <span class="badge rounded-pill badge-soft">CSS</span>
+            <span class="badge rounded-pill badge-soft">Bootstrap</span>
+            <span class="badge rounded-pill badge-soft">Deploy Netlify</span>
+          </div>
+        </div>
+        <div class="col-12 col-lg-5">
+          <div class="card rounded-4 shadow-sm">
+            <div class="card-body">
+              <h2 class="h6 fw-bold mb-2">Checklist antes de publicar</h2>
+              <ul class="small text-muted mb-0">
+                <li>El archivo se llama <code>index.html</code>.</li>
+                <li>Los enlaces a CSS/JS/imágenes apuntan a rutas correctas.</li>
+                <li>La web abre en local sin errores.</li>
+                <li>Las imágenes tienen <code>alt</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyectos" class="mb-4">
+      <h2 class="h4 fw-bold mb-3">Proyectos</h2>
+      <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100 rounded-4 shadow-sm">
+            <div class="card-body">
+              <h3 class="h6 fw-bold">Proyecto 1</h3>
+              <p class="text-muted small mb-2">Describe en 1–2 líneas qué hace tu proyecto.</p>
+              <a class="btn btn-sm btn-outline-primary" href="#" aria-label="Abrir proyecto 1">Ver</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100 rounded-4 shadow-sm">
+            <div class="card-body">
+              <h3 class="h6 fw-bold">Proyecto 2</h3>
+              <p class="text-muted small mb-2">Añade tecnologías: HTML, CSS, JS, Bootstrap.</p>
+              <a class="btn btn-sm btn-outline-primary" href="#" aria-label="Abrir proyecto 2">Ver</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100 rounded-4 shadow-sm">
+            <div class="card-body">
+              <h3 class="h6 fw-bold">Proyecto 3</h3>
+              <p class="text-muted small mb-2">Si no tienes más, borra esta tarjeta.</p>
+              <a class="btn btn-sm btn-outline-primary" href="#" aria-label="Abrir proyecto 3">Ver</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="mb-4">
+      <h2 class="h4 fw-bold mb-3">Contacto</h2>
+      <form class="row g-3" onsubmit="return onSubmitContacto(event)" novalidate>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="nombre">Nombre</label>
+          <input class="form-control" id="nombre" name="nombre" required minlength="2" />
+          <div class="invalid-feedback">Escribe tu nombre (mínimo 2 letras).</div>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control" id="email" name="email" type="email" required />
+          <div class="invalid-feedback">Escribe un email válido.</div>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="mensaje">Mensaje</label>
+          <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required minlength="10"></textarea>
+          <div class="invalid-feedback">Escribe al menos 10 caracteres.</div>
+        </div>
+        <div class="col-12 d-flex flex-wrap gap-2">
+          <button class="btn btn-primary" type="submit">Enviar (demo)</button>
+          <button class="btn btn-outline-secondary" type="reset">Limpiar</button>
+        </div>
+        <div class="col-12">
+          <div id="ok" class="alert alert-success d-none mb-0" role="status">Mensaje listo. En esta plantilla no se envía (demo).</div>
+        </div>
+      </form>
+    </section>
+
+    <section class="alert alert-info small mb-0">
+      <strong>Netlify tip:</strong> cuando publiques, guarda tu URL y ponla en tu perfil/currículum.
+      Si cambias el archivo, vuelve a arrastrarlo a Netlify Drop (o conecta GitHub más adelante).
+    </section>
+  </main>
+
+  <footer class="border-top">
+    <div class="container py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <small class="text-muted">© <span id="year"></span> Tu Nombre</small>
+      <small class="text-muted">Publicado con Netlify</small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function onSubmitContacto(event) {
+      event.preventDefault();
+      const form = event.target;
+      form.classList.add('was-validated');
+      const ok = form.checkValidity();
+      document.getElementById('ok').classList.toggle('d-none', !ok);
+      if (!ok) form.querySelector(':invalid')?.focus();
+      return false;
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

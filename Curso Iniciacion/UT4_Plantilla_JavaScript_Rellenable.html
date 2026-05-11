@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UT4 · Plantilla JavaScript Rellenable (Ejemplo)</title>
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║       🧑‍🏫 CLASE JAVASCRIPT · PLANTILLA GUIADA (RELLENABLE)       ║
+  ║       Autor: Joaquín — Nivel: iniciación                         ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  Convención de comentarios (Better Comments):
+    ! Importante   → idea clave
+    ? Nota         → aclaración útil
+    * Ejemplo      → fragmento de referencia
+    TODO Alumno    → tarea concreta que tú completas
+    ✅ Solución     → propuesta (comentada) para comparar
+
+  Objetivo de UT4 (JavaScript):
+    - Entender qué es JS y cómo se conecta a tu HTML.
+    - Llamar funciones desde eventos (click, input...), modificar el DOM
+      y ver SIEMPRE resultados en pantalla (no solo en alert/console).
+    - Practicar variables, condicionales, funciones, bucles, arrays, objetos,
+      eventos, DOM, atributos de imágenes y localStorage.
+    - Terminar mejorando tu Portfolio (UT1/UT2/UT3) con interactividad.
+  -->
+
+  <style>
+    :root{ --bg:#f6f7fb; --ink:#1f2937; --card:#ffffff; --muted:#6b7280; --accent:#2563eb; --line:#e5e7eb; }
+    *{ box-sizing:border-box }
+    body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--ink); margin:0; }
+    header, main{ max-width:1100px; margin:0 auto; padding:18px }
+    header{ position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--line); z-index:10; }
+    h1{ margin:.4em 0 }
+    .muted{ color:var(--muted) }
+    section{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin:16px 0 }
+    .acciones{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px }
+    button{ padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer }
+    button:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,0,0,.06) }
+    .resultado{ margin-top:10px; padding:10px; background:#eef2ff; border:1px dashed #c7d2fe; border-radius:10px; min-height:22px }
+    code, pre{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+    pre{ background:#0b1220; color:#dbeafe; padding:12px; border-radius:12px; overflow:auto; border:1px solid #0e1726 }
+    .tip{ background:#fff7ed; border:1px solid #fed7aa; padding:10px; border-radius:10px; margin-top:10px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>UT4 · JavaScript (rellenable) — <span class="muted">Autor: Joaquín</span></h1>
+  <p class="muted">Resultados visibles bajo cada ejercicio + TODOs guiados. Abre la consola (F12) para depurar.</p>
+</header>
+
+<main>
+
+  <!-- =========================================================
+  0) INTRODUCCIÓN
+  ========================================================== -->
+  <section id="intro">
+    <h2>0) ¿Qué es JavaScript y cómo “se llama”?</h2>
+    <!--
+      ! JS añade interactividad: responde a eventos y modifica el DOM.
+      * Flujo típico:
+        1) HTML define elementos (botones, textos…).
+        2) El usuario hace algo (click) → se ejecuta una función JS.
+        3) La función lee/cambia el DOM → ves el cambio en pantalla.
+      ? Aquí cada ejercicio tiene un botón y una caja .resultado.
+    -->
+    <div class="tip">💡 TIP: usa <code>alert()</code> solo para confirmar; muestra siempre un resultado visible en la página.</div>
+  </section>
+
+  <!-- =========================================================
+  1) alert()
+  ========================================================== -->
+  <section id="s1">
+    <h2>1) Mensajes emergentes con <code>alert()</code></h2>
+    <div class="acciones">
+      <button onclick="saludar()">Mostrar saludo</button>
+    </div>
+    <div id="res1" class="resultado">👉 Aquí verás el resultado textual.</div>
+
+    <script>
+      // TODO Alumno: Completa esta función
+      // Debe mostrar un alert("¡Hola!") y actualizar #res1 con "Saludo mostrado"
+      function saludar(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function saludar(){
+        alert("¡Hola! Bienvenido/a a JavaScript 🎉");
+        document.getElementById('res1').innerText = "Se mostró un alert() de saludo.";
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Crea despedir() que muestre "¡Hasta luego!" y lo deje reflejado en #res1. -->
+  </section>
+
+  <!-- =========================================================
+  2) prompt() + VARIABLES
+  ========================================================== -->
+  <section id="s2">
+    <h2>2) Variables + <code>prompt()</code></h2>
+    <!--
+      ! let → variable que cambia | const → constante.
+      * prompt(pregunta) devuelve texto o null.
+    -->
+    <div class="acciones">
+      <button onclick="preguntarNombre()">Pedir nombre</button>
+    </div>
+    <div id="res2" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Completa esta función
+      // 1) Usa prompt("¿Cómo te llamas?") y guarda el resultado en una variable
+      // 2) Si no está vacío, muestra "Encantado/a, [nombre]" en #res2
+      function preguntarNombre(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function preguntarNombre(){
+        const nombre = prompt("¿Cómo te llamas?");
+        const res = document.getElementById('res2');
+        if(nombre){ res.innerText = `Encantado/a, ${nombre}.`; alert(res.innerText); }
+        else{ res.innerText = "No escribiste nombre."; }
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         1) Crear preguntarCiudad() y mostrar "Vives en ...".
+         2) BONUS: Combina nombre+ciudad en una frase con template strings. -->
+  </section>
+
+  <!-- =========================================================
+  3) CONDICIONALES
+  ========================================================== -->
+  <section id="s3">
+    <h2>3) Condicionales (if / else if / else)</h2>
+    <div class="acciones">
+      <button onclick="esMayor()">¿Eres mayor de edad?</button>
+    </div>
+    <div id="res3" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Completa esta función
+      // 1) Pide la edad con prompt()
+      // 2) Convierte a número con Number()
+      // 3) Si edad >= 18, muestra "Eres mayor de edad", sino "Eres menor"
+      function esMayor(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function esMayor(){
+        const edad = Number(prompt("¿Edad?"));
+        let msg = "";
+        if(Number.isNaN(edad)) msg = "Entrada no válida.";
+        else if(edad >= 18) msg = "Mayor de edad ✅";
+        else if(edad < 5) msg = "Bebé 👶";
+        else msg = "Menor de edad 🚫";
+        document.getElementById('res3').innerText = msg;
+        alert(msg);
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         comprobarTreinta(): "30 o más" / "menos de 30". BONUS: caso 13–17. -->
+  </section>
+
+  <!-- =========================================================
+  4) FUNCIONES (parámetros y return)
+  ========================================================== -->
+    <!-- =========================================================
+  4) FUNCIONES (parámetros y return)
+  ========================================================== -->
+  <section id="s4">
+    <h2>4) Funciones con parámetros y retorno</h2>
+    <div class="acciones">
+      <button onclick="demoMultiplicar()">Calcular 3 × 4</button>
+    </div>
+    <div id="res4" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Crea la función multiplicar(a, b) que devuelva a * b
+      function multiplicar(a, b){
+        
+      }
+      
+      // TODO Alumno: Completa demoMultiplicar() para llamar a multiplicar(3, 4)
+      // y mostrar el resultado en #res4
+      function demoMultiplicar(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function multiplicar(a, b){ return a * b; }
+      function demoMultiplicar(){
+        let res = multiplicar(3, 4);
+        document.getElementById('res4').innerText = "3 × 4 = " + res;
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         restar(a,b) + demoRestar() con prompt y validación numérica. -->
+  </section>
+
+  <!-- =========================================================
+  5) BUCLES
+  ========================================================== -->
+  <section id="s5">
+    <h2>5) Bucles</h2>
+    <div class="acciones">
+      <button onclick="contarAsc()">Contar 1 → 5</button>
+      <button onclick="contarDesc()">Contar 5 → 1</button>
+    </div>
+    <div id="res5" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Crea contarAsc() que cuente de 1 a 5 con un bucle for
+      // Acumula los números en una variable texto y muéstralos en #res5
+      function contarAsc(){
+        
+      }
+      
+      // TODO Alumno: Crea contarDesc() que cuente de 5 a 1
+      function contarDesc(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function contarAsc(){
+        let s = "";
+        for(let i=1;i<=5;i++){ s += i + (i<5?" • ":""); }
+        document.getElementById('res5').innerText = s;
+      }
+      function contarDesc(){
+        let s = "";
+        for(let i=5;i>=1;i--){ s += i + (i>1?" • ":""); }
+        document.getElementById('res5').innerText = s;
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Pares 2..10. BONUS: FizzBuzz 1..20. -->
+  </section>
+
+  <!-- =========================================================
+  6) ARRAYS
+  ========================================================== -->
+  <section id="s6">
+    <h2>6) Arrays</h2>
+    <div class="acciones">
+      <button onclick="listarFrutas()">Mostrar frutas</button>
+      <button onclick="quitarPrimera()">Quitar primera</button>
+    </div>
+    <div id="res6" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Crea un array de frutas con al menos 3 elementos
+      const frutas = [];
+      
+      // TODO Alumno: Crea renderFrutas() que muestre el array en #res6
+      function renderFrutas(){
+        
+      }
+      
+      // TODO Alumno: Crea listarFrutas() que llame a renderFrutas()
+      function listarFrutas(){
+        
+      }
+      
+      // TODO Alumno: Crea quitarPrimera() que use shift() y actualice
+      function quitarPrimera(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      const frutas = ["manzana","banana","pera"];
+      function renderFrutas(){ 
+        document.getElementById('res6').innerText = "Frutas: " + frutas.join(", "); 
+      }
+      function listarFrutas(){ renderFrutas(); }
+      function quitarPrimera(){ frutas.shift(); renderFrutas(); }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Crea animales[] y botón "Agregar animal" con push() + render. -->
+  </section>
+
+  <!-- =========================================================
+  7) OBJETOS
+  ========================================================== -->
+  <section id="s7">
+    <h2>7) Objetos</h2>
+    <div class="acciones">
+      <button onclick="mostrarPersona()">Mostrar persona</button>
+    </div>
+    <div id="res7" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Completa mostrarPersona()
+      // 1) Crea un objeto persona con nombre, edad y ciudad
+      // 2) Muestra sus propiedades en #res7
+      function mostrarPersona(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function mostrarPersona(){
+        const persona = { nombre:"Alex", edad:28, ciudad:"Madrid" };
+        document.getElementById('res7').innerText =
+          `Me llamo ${persona.nombre}, tengo ${persona.edad} años y vivo en ${persona.ciudad}.`;
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Crea coche{marca,modelo,año} y muéstralo. BONUS: método resumen(). -->
+  </section>
+
+  <!-- =========================================================
+  8) DOM: cambiar texto y estilos
+  ========================================================== -->
+  <section id="s8">
+    <h2>8) Manipular el DOM</h2>
+    <p id="pDemo">Este texto se puede cambiar desde JS.</p>
+    <div class="acciones">
+      <button onclick="cambiarTexto()">Cambiar texto</button>
+      <button onclick="cambiarEstilo()">Cambiar estilo</button>
+    </div>
+    <div id="res8" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Completa cambiarTexto()
+      // Cambia el contenido de #pDemo a "¡Texto modificado con JS!"
+      // y actualiza #res8
+      function cambiarTexto(){
+        
+      }
+      
+      // TODO Alumno: Completa cambiarEstilo()
+      // Cambia el color y tamaño de fuente de #pDemo
+      function cambiarEstilo(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function cambiarTexto(){
+        const p = document.getElementById('pDemo');
+        p.innerText = "¡Texto cambiado con JS!";
+        document.getElementById('res8').innerText = "innerText actualizado.";
+      }
+      function cambiarEstilo(){
+        const p = document.getElementById('pDemo');
+        p.style.color = "#2563eb"; p.style.fontWeight = "700";
+        document.getElementById('res8').innerText = "Aplicado color y negrita.";
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Botón para cursiva (fontStyle='italic'). BONUS: alternar negrita/normal. -->
+  </section>
+
+  <!-- =========================================================
+  9) EVENTOS
+  ========================================================== -->
+  <section id="s9">
+    <h2>9) Eventos (mouseover, input)</h2>
+    <p id="textoEvento">Pasa el ratón por aquí…</p>
+    <input id="nombreInput" type="text" placeholder="Escribe tu nombre" />
+    <div id="res9" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Agrega un evento mouseover a #textoEvento
+      // Cuando pase el ratón, cambia el color a rojo y actualiza #res9
+      
+      
+      // TODO Alumno: Agrega un evento input a #nombreInput
+      // Muestra lo que escribe el usuario en #res9 en tiempo real
+      
+      
+      // ✅ Solución (comentada)
+      /*
+      document.getElementById('textoEvento').addEventListener('mouseover', function(){
+        this.style.color = '#ef4444';
+        this.innerText = "¡Ratón encima!";
+        document.getElementById('res9').innerText = "mouseover detectado.";
+      });
+      document.getElementById('nombreInput').addEventListener('input', function(){
+        document.getElementById('res9').innerText = this.value ? "Escribiendo: " + this.value : "Vacío";
+      });
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         mouseout para restaurar texto/color. -->
+  </section>  <!-- =========================================================
+  10) IMÁGENES (atributos)
+  ========================================================== -->
+  <section id="s10">
+    <h2>10) Cambiar atributos (imágenes)</h2>
+    <img id="imgDemo" src="https://via.placeholder.com/200" alt="Imagen demo" />
+    <div class="acciones">
+      <button onclick="cambiarImagen()">Cambiar imagen</button>
+      <button onclick="ponerBorde()">Borde rojo</button>
+      <button onclick="quitarBorde()">Quitar borde</button>
+    </div>
+    <div id="res10" class="resultado"></div>
+
+    <script>
+      function cambiarImagen(){
+        const img = document.getElementById('imgDemo');
+        img.src = "https://picsum.photos/300"; img.alt = "Imagen aleatoria";
+        document.getElementById('res10').innerText = "Imagen y alt actualizados.";
+      }
+      function ponerBorde(){ document.getElementById('imgDemo').style.border = "4px solid #ef4444";
+        document.getElementById('res10').innerText = "Borde rojo aplicado."; }
+      function quitarBorde(){ document.getElementById('imgDemo').style.border = "none";
+        document.getElementById('res10').innerText = "Borde eliminado."; }
+    </script>
+
+    <!-- TODO Alumno:
+         Botón que cambie solo el alt a “Mi imagen personalizada”. -->
+  </section>
+
+    <!-- =========================================================
+  11) localStorage
+  ========================================================== -->
+  <section id="s11">
+    <h2>11) Guardar datos con <code>localStorage</code></h2>
+    <input id="datoGuardar" type="text" placeholder="Escribe algo para guardar" />
+    <div class="acciones">
+      <button onclick="guardarDato()">Guardar</button>
+      <button onclick="mostrarDato()">Mostrar</button>
+      <button onclick="borrarDato()">Borrar</button>
+    </div>
+    <div id="res11" class="resultado"></div>
+
+    <script>
+      // TODO Alumno: Completa guardarDato()
+      // Lee el valor de #datoGuardar y guárdalo en localStorage con setItem()
+      function guardarDato(){
+        
+      }
+      
+      // TODO Alumno: Completa mostrarDato()
+      // Lee el dato de localStorage con getItem() y muéstralo en #res11
+      function mostrarDato(){
+        
+      }
+      
+      // TODO Alumno: Completa borrarDato()
+      // Elimina el dato con removeItem() y actualiza #res11
+      function borrarDato(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function guardarDato(){ 
+        const v = document.getElementById('datoGuardar').value;
+        localStorage.setItem("miDato", v);
+        document.getElementById('res11').innerText = "Dato guardado ✅"; 
+      }
+      function mostrarDato(){ 
+        const v = localStorage.getItem("miDato");
+        document.getElementById('res11').innerText = "Dato guardado: " + (v ?? "(ninguno)"); 
+      }
+      function borrarDato(){
+        localStorage.removeItem("miDato");
+        document.getElementById('res11').innerText = "Dato borrado.";
+      }
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Crea un contador que se guarde en localStorage y persista al recargar. -->
+  </section>
+
+    <!-- =========================================================
+  12) MINI PROYECTO · Tarjeta de perfil
+  ========================================================== -->
+  <section id="s12">
+    <h2>12) 🎯 Mini‑proyecto: Tarjeta de perfil interactiva</h2>
+    <div class="acciones" style="gap:8px; align-items:flex-end; flex-wrap:wrap">
+      <div>
+        <label style="display:block; font-size:13px; color:#6b7280">Nombre:</label>
+        <input id="perfilNombre" type="text" style="padding:6px; border:1px solid #d1d5db; border-radius:6px">
+      </div>
+      <div>
+        <label style="display:block; font-size:13px; color:#6b7280">Edad:</label>
+        <input id="perfilEdad" type="number" style="padding:6px; border:1px solid #d1d5db; border-radius:6px; width:80px">
+      </div>
+      <button onclick="crearPerfil()">Crear Perfil</button>
+    </div>
+    <div id="perfilCard" class="resultado" style="background:#ecfeff; border-color:#67e8f9; min-height:60px"></div>
+
+    <script>
+      // TODO Alumno: Completa crearPerfil()
+      // 1) Lee los valores de #perfilNombre y #perfilEdad
+      // 2) Crea un objeto perfil con esos datos
+      // 3) Muestra la información en #perfilCard con buen formato
+      // BONUS: Guarda el perfil en localStorage y cárgalo al inicio
+      function crearPerfil(){
+        
+      }
+      
+      // ✅ Solución (comentada)
+      /*
+      function crearPerfil(){
+        const perfil = {
+          nombre: document.getElementById('perfilNombre').value,
+          edad: Number(document.getElementById('perfilEdad').value)
+        };
+        if(!perfil.nombre || !perfil.edad){
+          document.getElementById('perfilCard').innerText = "⚠ Completa todos los campos.";
+          return;
+        }
+        document.getElementById('perfilCard').innerHTML = 
+          `<strong>👤 ${perfil.nombre}</strong><br>Edad: ${perfil.edad} años`;
+        localStorage.setItem('perfil', JSON.stringify(perfil));
+      }
+      // Al cargar la página, intenta recuperar el perfil
+      window.addEventListener('load', function(){
+        const guardado = localStorage.getItem('perfil');
+        if(guardado){
+          const perfil = JSON.parse(guardado);
+          document.getElementById('perfilNombre').value = perfil.nombre;
+          document.getElementById('perfilEdad').value = perfil.edad;
+          crearPerfil();
+        }
+      });
+      */
+    </script>
+
+    <!-- TODO Alumno:
+         Añade más campos (ciudad, hobby) y mejora el diseño de la tarjeta. -->
+  </section>
+
+  <!-- =========================================================
+  13) PROYECTO FINAL · Portfolio con Bootstrap + JavaScript
+  ========================================================== -->
+  <section id="s13">
+    <h2>13) Proyecto Final · Portfolio con Bootstrap + JavaScript</h2>
+    <p>Aplica interactividad a tu portfolio (UT1/UT2/UT3):</p>
+
+    <ol>
+      <li><strong>Navbar fija</strong> con <code>navbar</code> y <em>scroll suave</em> (JS) a secciones por id.</li>
+      <li><strong>Sobre mí</strong>: botón “WhatsApp” → <code>window.open("https://wa.me/34XXXXXXXXX")</code>.</li>
+      <li><strong>Proyectos</strong>: cards + <em>filtro</em> por palabra clave con JS.</li>
+      <li><strong>Galería</strong>: grid con Bootstrap + <em>modal</em> al hacer clic (JS).</li>
+      <li><strong>Contacto</strong>: validación de email y mensaje (JS) + botón <code>mailto:</code>.</li>
+      <li><strong>Footer</strong>: botón <em>modo oscuro</em> que alterna clases en <code>body</code>.</li>
+    </ol>
+
+    <!-- * Ejemplo mínimo de scroll suave -->
+    <pre><code>// * Pega esto en tu portfolio y adapta los selectores
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href');
+    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+  });
+});</code></pre>
+
+    <!-- TODO Alumno:
+         ✔ Integra estas mejoras en TU portfolio.
+         ✔ Prueba en móvil/escritorio (responsive).
+         ✔ Publica en Netlify/Vercel si quieres compartirlo. -->
+  </section>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UT0 · Configuración del Entorno de Desarrollo</title>
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║       🛠️ UT0 — CONFIGURACIÓN DEL ENTORNO DE DESARROLLO          ║
+  ║       Autor: Joaquín Rodríguez — Nivel: principiante absoluto    ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  Convención de comentarios (Better Comments):
+    ! Importante   → idea clave
+    ? Nota         → aclaración útil
+    * Ejemplo      → fragmento de referencia
+    TODO Alumno    → tarea concreta que tú completas
+    ✅ Verificado   → ya lo has hecho
+
+  Objetivo de UT0:
+    - Instalar y configurar VS Code
+    - Instalar las extensiones esenciales
+    - Crear tu primera carpeta de proyecto
+    - Ejecutar tu primer "Hola Mundo" con Live Server
+    - Conocer los atajos de teclado básicos
+  -->
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --danger: #ef4444;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* Header fijo */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    header .wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    header h1 {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+    header .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Contenido principal */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* Secciones */
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .emoji { font-size: 1.3em; }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--ink);
+      margin: 24px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent-light);
+    }
+
+    p { margin-bottom: 14px; }
+
+    /* Listas */
+    ul, ol {
+      margin: 14px 0 14px 24px;
+    }
+    li { margin-bottom: 8px; }
+
+    /* Código */
+    code {
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9em;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 18px;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Tablas */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    tr:nth-child(even) { background: var(--bg); }
+    tr:hover { background: var(--accent-light); }
+
+    /* Cajas de información */
+    .info-box {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+    .info-box.tip {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+    }
+    .info-box.warning {
+      background: var(--warning-light);
+      border-left: 4px solid var(--warning);
+    }
+    .info-box.success {
+      background: var(--success-light);
+      border-left: 4px solid var(--success);
+    }
+    .info-box.danger {
+      background: #fee2e2;
+      border-left: 4px solid var(--danger);
+    }
+    .info-box strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    /* Checklist interactivo */
+    .checklist {
+      list-style: none;
+      margin: 16px 0;
+      padding: 0;
+    }
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .checklist li:hover {
+      background: var(--accent-light);
+    }
+    .checklist li.checked {
+      background: var(--success-light);
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+    .checklist input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      accent-color: var(--success);
+    }
+
+    /* Diagrama ASCII */
+    .ascii-box {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 20px;
+      border-radius: 12px;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.4;
+    }
+
+    /* Botones */
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+    }
+    .btn-success { background: var(--success); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+    }
+
+    /* Progreso */
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .progress-bar .fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--success));
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    /* Navegación de pasos */
+    .step-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .step-nav a {
+      padding: 8px 16px;
+      background: var(--bg);
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .step-nav a:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--code-bg);
+      color: var(--code-text);
+      text-align: center;
+      padding: 24px;
+      margin-top: 40px;
+    }
+    footer a { color: var(--accent-light); }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.2rem; }
+      section { padding: 20px; }
+      table { font-size: 0.85rem; }
+      th, td { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ! Importante: Esta página guía al alumno paso a paso para dejar listo el entorno antes de empezar el curso. -->
+  <!-- ? Nota (docente): Si duplicas esta unidad para otro curso, revisa títulos, número de pasos y enlaces de navegación. -->
+
+  <header>
+    <div class="wrapper">
+      <div>
+        <h1>🛠️ UT0 · Configuración del Entorno</h1>
+        <p class="meta">Duración: 45-60 min · Nivel: Principiante</p>
+      </div>
+      <div>
+        <span id="progressText">0/11 completado</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ! Barra de progreso vinculada a todas las checklists de la página (ver script al final). -->
+    <!-- TODO Alumno: Si añades o eliminas pasos, revisa que el total de checklist siga teniendo sentido. -->
+    <!-- Barra de progreso -->
+    <div class="progress-bar">
+      <div class="fill" id="progressFill" style="width: 0%"></div>
+    </div>
+
+    <!-- Navegación de pasos -->
+    <nav class="step-nav">
+      <a href="#paso1">1. ¿Qué necesitamos?</a>
+      <a href="#paso2">2. Instalar VS Code</a>
+      <a href="#paso3">3. Español</a>
+      <a href="#paso4">4. Extensiones</a>
+      <a href="#paso5">5. Carpeta proyecto</a>
+      <a href="#paso6">6. Hola Mundo</a>
+      <a href="#paso7">7. Live Server</a>
+      <a href="#paso8">8. Atajos</a>
+      <a href="#paso9">9. DevTools</a>
+      <a href="#paso10">10. Estructura</a>
+      <a href="#paso11">11. Checklist</a>
+    </nav>
+
+    <!-- INTRODUCCIÓN -->
+    <section id="intro">
+      <h2><span class="emoji">🎯</span> Objetivo de esta unidad</h2>
+      <p>Antes de escribir tu primera línea de código, necesitas <strong>preparar tu entorno de trabajo</strong>. Al terminar esta unidad tendrás:</p>
+      <ul>
+        <li>✅ <strong>VS Code</strong> instalado y configurado</li>
+        <li>✅ <strong>Extensiones esenciales</strong> para desarrollo web</li>
+        <li>✅ Tu <strong>primera carpeta de proyecto</strong> organizada</li>
+        <li>✅ Un archivo <strong>"Hola Mundo"</strong> funcionando en el navegador</li>
+        <li>✅ Conocimiento de los <strong>atajos de teclado</strong> básicos</li>
+      </ul>
+    </section>
+
+    <!-- ! PASO 1: Presentar las herramientas básicas que usaremos durante todo el curso. -->
+    <!-- PASO 1 -->
+    <section id="paso1">
+      <h2><span class="emoji">1️⃣</span> ¿Qué necesitamos?</h2>
+      <p>Para desarrollar páginas web necesitas solo <strong>3 cosas gratuitas</strong>:</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Herramienta</th>
+            <th>¿Para qué?</th>
+            <th>¿Dónde conseguirla?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Editor de código</strong></td>
+            <td>Escribir HTML, CSS, JavaScript</td>
+            <td>VS Code (gratis)</td>
+          </tr>
+          <tr>
+            <td><strong>Navegador moderno</strong></td>
+            <td>Ver el resultado</td>
+            <td>Chrome, Firefox, Edge</td>
+          </tr>
+          <tr>
+            <td><strong>Ganas de aprender</strong></td>
+            <td>¡Lo más importante!</td>
+            <td>Ya las tienes 😄</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>¿Por qué VS Code?</h3>
+      <ul>
+        <li>🆓 <strong>Gratuito</strong> y de código abierto</li>
+        <li>🚀 <strong>Ligero</strong> pero muy potente</li>
+        <li>🧩 <strong>Extensiones</strong> para todo</li>
+        <li>🌍 <strong>El más usado</strong> en la industria</li>
+        <li>📚 <strong>Mucha documentación</strong> y tutoriales</li>
+      </ul>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Entiendo qué herramientas necesito
+        </li>
+      </ul>
+    </section>
+
+    <!-- ! PASO 2: Descarga e instalación de VS Code. Ideal para hacer en directo con el grupo. -->
+    <!-- PASO 2 -->
+    <section id="paso2">
+      <h2><span class="emoji">2️⃣</span> Instalar Visual Studio Code</h2>
+      
+      <h3>2.1 Descargar</h3>
+      <ol>
+        <li>Abre tu navegador</li>
+        <li>Ve a: <a href="https://code.visualstudio.com" target="_blank"><strong>https://code.visualstudio.com</strong></a></li>
+        <li>Haz clic en el botón grande de descarga</li>
+      </ol>
+
+      <a href="https://code.visualstudio.com" target="_blank" class="btn">⬇️ Descargar VS Code</a>
+
+      <h3>2.2 Instalar en Windows</h3>
+      <ol>
+        <li>Abre el archivo descargado (<code>VSCodeUserSetup-x64-X.XX.X.exe</code>)</li>
+        <li>Acepta los términos de licencia</li>
+        <li><strong>⚠️ IMPORTANTE:</strong> Marca estas opciones:
+          <ul>
+            <li>☑️ Agregar "Abrir con Code" al menú contextual de archivos</li>
+            <li>☑️ Agregar "Abrir con Code" al menú contextual de directorios</li>
+            <li>☑️ Agregar a PATH</li>
+          </ul>
+        </li>
+        <li>Haz clic en "Instalar"</li>
+        <li>Al terminar, haz clic en "Finalizar"</li>
+      </ol>
+
+      <div class="info-box warning">
+        <strong>⚠️ Importante</strong>
+        No olvides marcar las opciones del menú contextual. Te permitirán abrir carpetas directamente con clic derecho.
+      </div>
+
+      <h3>2.3 Instalar en macOS</h3>
+      <ol>
+        <li>Abre el archivo <code>.zip</code> descargado</li>
+        <li>Arrastra <strong>Visual Studio Code.app</strong> a la carpeta <strong>Aplicaciones</strong></li>
+        <li>Abre VS Code desde Aplicaciones</li>
+      </ol>
+
+      <h3>2.4 Instalar en Linux (Ubuntu/Debian)</h3>
+      <pre><code># Opción 1: Descargar .deb desde la web
+sudo dpkg -i code_*.deb
+
+# Opción 2: Usando snap
+sudo snap install code --classic</code></pre>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> VS Code está instalado y puedo abrirlo
+        </li>
+      </ul>
+    </section>
+
+    <!-- ? PASO 3: Solo necesario si el alumno prefiere la interfaz en español. -->
+    <!-- PASO 3 -->
+    <section id="paso3">
+      <h2><span class="emoji">3️⃣</span> Configurar VS Code en español</h2>
+      
+      <ol>
+        <li>Pulsa <code>Ctrl + Shift + X</code> (Windows/Linux) o <code>Cmd + Shift + X</code> (Mac)</li>
+        <li>Esto abre el panel de <strong>Extensiones</strong></li>
+        <li>Escribe: <code>Spanish Language Pack</code></li>
+        <li>Busca: <strong>"Spanish Language Pack for Visual Studio Code"</strong> (de Microsoft)</li>
+        <li>Haz clic en <strong>"Install"</strong></li>
+        <li>Aparecerá un mensaje para cambiar el idioma</li>
+        <li>Haz clic en <strong>"Change Language and Restart"</strong></li>
+      </ol>
+
+      <div class="info-box tip">
+        <strong>💡 Consejo</strong>
+        Si el mensaje no aparece, pulsa <code>Ctrl + Shift + P</code>, escribe "Configure Display Language", selecciona "es" y reinicia.
+      </div>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> VS Code está en español
+        </li>
+      </ul>
+    </section>
+
+    <!-- * PASO 4: Aquí se presentan las extensiones clave (Live Server, Better Comments, etc.). -->
+    <!-- PASO 4 -->
+    <section id="paso4">
+      <h2><span class="emoji">4️⃣</span> Instalar extensiones esenciales</h2>
+      
+      <p>Las extensiones añaden superpoderes a VS Code. Para instalarlas:</p>
+      <ol>
+        <li>Pulsa <code>Ctrl + Shift + X</code></li>
+        <li>Escribe el nombre de la extensión</li>
+        <li>Haz clic en <strong>"Instalar"</strong></li>
+      </ol>
+
+      <h3>🔴 OBLIGATORIAS (instalar SÍ o SÍ)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Extensión</th>
+            <th>Autor</th>
+            <th>¿Para qué?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Live Server</strong></td>
+            <td>Ritwick Dey</td>
+            <td>Ver tu página con recarga automática</td>
+          </tr>
+          <tr>
+            <td><strong>Better Comments</strong></td>
+            <td>Aaron Bond</td>
+            <td>Comentarios de colores</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>🟡 RECOMENDADAS (instalar cuando puedas)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Extensión</th>
+            <th>¿Para qué?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Prettier</td><td>Formatea tu código automáticamente</td></tr>
+          <tr><td>Auto Rename Tag</td><td>Cambia etiquetas HTML automáticamente</td></tr>
+          <tr><td>HTML CSS Support</td><td>Autocompletado de clases CSS</td></tr>
+          <tr><td>Color Highlight</td><td>Muestra colores CSS visualmente</td></tr>
+          <tr><td>indent-rainbow</td><td>Colorea la indentación</td></tr>
+          <tr><td>Path Intellisense</td><td>Autocompletado de rutas</td></tr>
+        </tbody>
+      </table>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Live Server instalado
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Better Comments instalado
+        </li>
+      </ul>
+    </section>
+
+    <!-- TODO Alumno: Crea realmente la carpeta de proyecto en tu equipo antes de seguir leyendo. -->
+    <!-- PASO 5 -->
+    <section id="paso5">
+      <h2><span class="emoji">5️⃣</span> Crear tu primera carpeta de proyecto</h2>
+      
+      <h3>5.1 Dónde guardar tus proyectos</h3>
+      <p>Crea una carpeta principal para TODOS tus proyectos web:</p>
+      
+      <pre><code>Windows:  C:\Users\TuNombre\Documentos\desarrollo-web\
+macOS:    /Users/TuNombre/Documents/desarrollo-web/
+Linux:    /home/tunombre/desarrollo-web/</code></pre>
+
+      <h3>5.2 Crear la estructura</h3>
+      <ol>
+        <li>Abre el <strong>Explorador de archivos</strong></li>
+        <li>Ve a <strong>Documentos</strong></li>
+        <li>Crea una carpeta llamada <code>desarrollo-web</code></li>
+        <li>Dentro, crea otra carpeta llamada <code>00-hola-mundo</code></li>
+      </ol>
+
+      <div class="ascii-box">📁 Documentos/
+   📁 desarrollo-web/           ← Carpeta principal del curso
+      📁 00-hola-mundo/         ← Tu primer proyecto
+      📁 01-portfolio-html/     ← (Lo crearás en UT1)
+      📁 02-portfolio-css/      ← (Lo crearás en UT2)
+      ...</div>
+
+      <h3>5.3 Abrir la carpeta en VS Code</h3>
+      <p><strong>Método 1:</strong> Desde VS Code → <code>Archivo → Abrir carpeta...</code></p>
+      <p><strong>Método 2:</strong> Clic derecho en la carpeta → "Abrir con Code"</p>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Carpeta desarrollo-web creada
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Carpeta 00-hola-mundo creada y abierta en VS Code
+        </li>
+      </ul>
+    </section>
+
+    <!-- * PASO 6: Primer archivo HTML \"Hola Mundo\" que luego probaremos con Live Server. -->
+    <!-- PASO 6 -->
+    <section id="paso6">
+      <h2><span class="emoji">6️⃣</span> Tu primer archivo HTML (Hola Mundo)</h2>
+      
+      <h3>6.1 Crear el archivo</h3>
+      <ol>
+        <li>En VS Code, con la carpeta <code>00-hola-mundo</code> abierta</li>
+        <li>En el panel izquierdo, haz clic en el icono de <strong>"Nuevo archivo"</strong> 📄</li>
+        <li>Escribe: <code>index.html</code></li>
+        <li>Pulsa <code>Enter</code></li>
+      </ol>
+
+      <h3>6.2 El atajo mágico: Emmet</h3>
+      <div class="info-box success">
+        <strong>🎉 Truco genial</strong>
+        En un archivo .html vacío, escribe solo <code>!</code> y pulsa <code>Tab</code>. ¡Se genera toda la estructura automáticamente!
+      </div>
+
+      <h3>6.3 Escribir el código</h3>
+      <p>Usa el atajo <code>!</code> + <code>Tab</code> y luego modifica el body:</p>
+
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Mi Primera Página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;¡Hola Mundo! 🌍&lt;/h1&gt;
+    &lt;p&gt;Esta es mi primera página web.&lt;/p&gt;
+    &lt;p&gt;Estoy aprendiendo desarrollo web.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <h3>6.4 Guardar</h3>
+      <p>Pulsa <code>Ctrl + S</code> (Windows/Linux) o <code>Cmd + S</code> (Mac)</p>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Archivo index.html creado con el código
+        </li>
+      </ul>
+    </section>
+
+    <!-- ! PASO 7: Asegúrate de que todos ven y usan el botón \"Go Live\" en VS Code. -->
+    <!-- PASO 7 -->
+    <section id="paso7">
+      <h2><span class="emoji">7️⃣</span> Ejecutar con Live Server</h2>
+      
+      <h3>7.1 Iniciar Live Server</h3>
+      <p>Con el archivo <code>index.html</code> abierto:</p>
+      <ul>
+        <li><strong>Método 1:</strong> Clic derecho en el código → "Open with Live Server"</li>
+        <li><strong>Método 2:</strong> Clic en <strong>"Go Live"</strong> en la barra azul inferior</li>
+      </ul>
+
+      <div class="ascii-box">┌─────────────────────────────────────────────────────┐
+│ [VS Code]                                           │
+│                                                     │
+│  ... tu código ...                                  │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│ Ln 1, Col 1    UTF-8    HTML    🔴 Go Live          │
+└─────────────────────────────────────────────────────┘
+                                     ↑
+                              Haz clic aquí</div>
+
+      <h3>7.2 Ver el resultado</h3>
+      <p>Se abrirá tu navegador en: <code>http://127.0.0.1:5500</code></p>
+
+      <h3>7.3 La magia ✨</h3>
+      <ol>
+        <li>Vuelve a VS Code</li>
+        <li>Cambia el texto del <code>&lt;h1&gt;</code></li>
+        <li>Guarda (<code>Ctrl + S</code>)</li>
+        <li>¡Mira el navegador! Se actualiza <strong>automáticamente</strong> 🎉</li>
+      </ol>
+
+      <div class="info-box tip">
+        <strong>💡 Para detener Live Server</strong>
+        Haz clic en "Port: 5500" en la barra inferior (donde antes decía "Go Live")
+      </div>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Live Server funciona y veo mi página en el navegador
+        </li>
+      </ul>
+    </section>
+
+    <!-- ? PASO 8: Buen momento para que practiquen atajos escribiendo texto libre en el editor. -->
+    <!-- PASO 8 -->
+    <section id="paso8">
+      <h2><span class="emoji">8️⃣</span> Atajos de teclado imprescindibles</h2>
+      
+      <p>Memoriza estos atajos, ¡te ahorrarán MUCHO tiempo!</p>
+
+      <h3>Atajos generales</h3>
+      <table>
+        <thead>
+          <tr><th>Acción</th><th>Windows/Linux</th><th>Mac</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Guardar</td><td><code>Ctrl + S</code></td><td><code>Cmd + S</code></td></tr>
+          <tr><td>Deshacer</td><td><code>Ctrl + Z</code></td><td><code>Cmd + Z</code></td></tr>
+          <tr><td>Rehacer</td><td><code>Ctrl + Y</code></td><td><code>Cmd + Shift + Z</code></td></tr>
+          <tr><td>Buscar</td><td><code>Ctrl + F</code></td><td><code>Cmd + F</code></td></tr>
+          <tr><td>Paleta de comandos</td><td><code>Ctrl + Shift + P</code></td><td><code>Cmd + Shift + P</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Atajos de edición</h3>
+      <table>
+        <thead>
+          <tr><th>Acción</th><th>Windows/Linux</th><th>Mac</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Duplicar línea</td><td><code>Shift + Alt + ↓</code></td><td><code>Shift + Option + ↓</code></td></tr>
+          <tr><td>Mover línea</td><td><code>Alt + ↑/↓</code></td><td><code>Option + ↑/↓</code></td></tr>
+          <tr><td>Comentar línea</td><td><code>Ctrl + /</code></td><td><code>Cmd + /</code></td></tr>
+          <tr><td>Borrar línea</td><td><code>Ctrl + Shift + K</code></td><td><code>Cmd + Shift + K</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Atajos de Emmet (HTML)</h3>
+      <table>
+        <thead>
+          <tr><th>Escribes</th><th>Pulsas Tab</th><th>Obtienes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>!</code></td><td>→</td><td>Estructura HTML completa</td></tr>
+          <tr><td><code>div</code></td><td>→</td><td><code>&lt;div&gt;&lt;/div&gt;</code></td></tr>
+          <tr><td><code>div.clase</code></td><td>→</td><td><code>&lt;div class="clase"&gt;&lt;/div&gt;</code></td></tr>
+          <tr><td><code>div#id</code></td><td>→</td><td><code>&lt;div id="id"&gt;&lt;/div&gt;</code></td></tr>
+          <tr><td><code>ul&gt;li*3</code></td><td>→</td><td>Lista con 3 items</td></tr>
+        </tbody>
+      </table>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> He probado al menos 3 atajos
+        </li>
+      </ul>
+    </section>
+
+    <!-- * PASO 9: Mostrar cómo inspeccionar elementos y modificar estilos en DevTools en tiempo real. -->
+    <!-- PASO 9 -->
+    <section id="paso9">
+      <h2><span class="emoji">9️⃣</span> Navegador y DevTools</h2>
+      
+      <h3>¿Qué navegador usar?</h3>
+      <table>
+        <thead>
+          <tr><th>Navegador</th><th>Recomendación</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Google Chrome</strong></td><td>⭐ El más usado, excelentes DevTools</td></tr>
+          <tr><td><strong>Mozilla Firefox</strong></td><td>⭐ Muy bueno para desarrollo</td></tr>
+          <tr><td><strong>Microsoft Edge</strong></td><td>✅ Basado en Chrome</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Abrir DevTools</h3>
+      <p>Pulsa <code>F12</code> en cualquier página web. Verás algo así:</p>
+
+      <div class="ascii-box">┌────────────────────────────────────────────────────────────────┐
+│ Elements │ Console │ Sources │ Network │ Performance │ ...    │
+└────────────────────────────────────────────────────────────────┘
+     ↓          ↓
+     │          └── Ver errores de JavaScript
+     └── Inspeccionar y modificar HTML/CSS</div>
+
+      <h3>Ejercicio: Inspecciona tu página</h3>
+      <ol>
+        <li>Abre tu página con Live Server</li>
+        <li>Pulsa <code>F12</code></li>
+        <li>En la pestaña <strong>Elements</strong>, busca tu <code>&lt;h1&gt;</code></li>
+        <li>Haz doble clic en el texto y cámbialo</li>
+        <li>¡Ves el cambio en la página! (temporal)</li>
+      </ol>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Sé abrir DevTools con F12
+        </li>
+      </ul>
+    </section>
+
+    <!-- PASO 10 -->
+    <section id="paso10">
+      <h2><span class="emoji">🔟</span> Estructura de carpetas recomendada</h2>
+      
+      <h3>Para un proyecto simple</h3>
+      <div class="ascii-box">📁 mi-proyecto/
+   📄 index.html          ← Página principal
+   📄 about.html          ← Otras páginas
+   📁 css/
+      📄 styles.css       ← Estilos
+   📁 js/
+      📄 app.js           ← JavaScript
+   📁 img/
+      🖼️ logo.png         ← Imágenes
+      🖼️ foto.jpg</div>
+
+      <h3>Reglas para nombres de archivos</h3>
+      <table>
+        <thead>
+          <tr><th>✅ BIEN</th><th>❌ MAL</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>index.html</code></td><td><code>Index.HTML</code> (mayúsculas)</td></tr>
+          <tr><td><code>mi-proyecto.html</code></td><td><code>mi proyecto.html</code> (espacios)</td></tr>
+          <tr><td><code>foto-perfil.jpg</code></td><td><code>página.html</code> (tildes)</td></tr>
+        </tbody>
+      </table>
+
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Entiendo cómo organizar mis proyectos
+        </li>
+      </ul>
+    </section>
+
+    <!-- TODO Alumno: Dibuja en papel la estructura de carpetas de tu primer proyecto antes de continuar. -->
+    <!-- PASO 11 - CHECKLIST FINAL -->
+    <section id="paso11">
+      <h2><span class="emoji">✅</span> Checklist Final</h2>
+      
+      <p>Antes de pasar a la UT1, verifica que tienes todo:</p>
+
+      <h3>Software instalado</h3>
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> VS Code instalado y funcionando
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> VS Code en español
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Extensión Live Server instalada
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Extensión Better Comments instalada
+        </li>
+      </ul>
+
+      <h3>Proyecto de prueba</h3>
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Carpeta desarrollo-web creada
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Archivo index.html con "Hola Mundo"
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Página funcionando con Live Server
+        </li>
+      </ul>
+
+      <h3>Conocimientos básicos</h3>
+      <ul class="checklist">
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Sé crear archivos en VS Code
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Sé usar el atajo ! + Tab para HTML
+        </li>
+        <li onclick="toggleCheck(this)">
+          <input type="checkbox"> Sé abrir DevTools (F12)
+        </li>
+      </ul>
+
+      <div class="info-box success" style="margin-top: 24px;">
+        <strong>🎉 ¡Felicidades!</strong>
+        Has completado la configuración de tu entorno. ¡Estás listo/a para empezar la <strong>UT1: HTML</strong>!
+      </div>
+
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="#" class="btn btn-success">🚀 Ir a UT1: HTML →</a>
+      </div>
+    </section>
+
+    <!-- SOLUCIÓN DE PROBLEMAS -->
+    <section id="problemas">
+      <h2><span class="emoji">🆘</span> Solución de problemas</h2>
+      
+      <h3>❌ "Live Server no aparece"</h3>
+      <div class="info-box danger">
+        <strong>Causa:</strong> La extensión no está instalada.<br>
+        <strong>Solución:</strong> Pulsa <code>Ctrl + Shift + X</code>, busca "Live Server" e instálala.
+      </div>
+
+      <h3>❌ "Go Live no aparece en la barra"</h3>
+      <div class="info-box danger">
+        <strong>Causa:</strong> No tienes un archivo HTML abierto.<br>
+        <strong>Solución:</strong> Abre un archivo <code>.html</code>.
+      </div>
+
+      <h3>❌ "Los cambios no se actualizan"</h3>
+      <div class="info-box danger">
+        <strong>Causa:</strong> No has guardado el archivo.<br>
+        <strong>Solución:</strong> Pulsa <code>Ctrl + S</code>. Si hay un <strong>punto blanco</strong> en la pestaña, hay cambios sin guardar.
+      </div>
+
+      <h3>❌ "VS Code sigue en inglés"</h3>
+      <div class="info-box danger">
+        <strong>Solución:</strong> Pulsa <code>Ctrl + Shift + P</code>, escribe "Configure Display Language", selecciona "es" y reinicia.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>UT0 · Configuración del Entorno</strong></p>
+    <p>Curso de Iniciación al Desarrollo Web — Joaquín Rodríguez</p>
+    <p style="margin-top: 8px;">
+      <a href="#">← Volver al índice</a> · 
+      <a href="#">UT1: HTML →</a>
+    </p>
+  </footer>
+
+  <!-- ? Nota técnica: El progreso se guarda en localStorage bajo la clave "ut0-progress". -->
+
+  <script>
+    // Función para marcar/desmarcar checklist
+    function toggleCheck(li) {
+      const checkbox = li.querySelector('input[type="checkbox"]');
+      checkbox.checked = !checkbox.checked;
+      li.classList.toggle('checked', checkbox.checked);
+      updateProgress();
+    }
+
+    // Actualizar barra de progreso
+    function updateProgress() {
+      const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+      const total = checkboxes.length;
+      const checked = document.querySelectorAll('.checklist input[type="checkbox"]:checked').length;
+      const percentage = Math.round((checked / total) * 100);
+      
+      document.getElementById('progressFill').style.width = percentage + '%';
+      document.getElementById('progressText').textContent = checked + '/' + total + ' completado';
+      
+      // Guardar en localStorage
+      const state = {};
+      checkboxes.forEach((cb, i) => {
+        state[i] = cb.checked;
+      });
+      localStorage.setItem('ut0-progress', JSON.stringify(state));
+    }
+
+    // Cargar progreso guardado
+    function loadProgress() {
+      const saved = localStorage.getItem('ut0-progress');
+      if (saved) {
+        const state = JSON.parse(saved);
+        const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+        checkboxes.forEach((cb, i) => {
+          if (state[i]) {
+            cb.checked = true;
+            cb.closest('li').classList.add('checked');
+          }
+        });
+        updateProgress();
+      }
+    }
+
+    // Inicializar
+    loadProgress();
+  </script>
+
+</body>
+</html>

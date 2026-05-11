@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UT6 - DevTools + Git + Flujo real de trabajo</title>
+
+  <!--
+  =====================================================================
+  ! UT6 - DEVTOOLS + GIT + FLUJO REAL DE TRABAJO (PLANTILLA DOCENTE)
+  =====================================================================
+  Guía de lectura de comentarios:
+    !  Importante / idea clave
+    ?  Nota / aclaración contextual
+    *  Ejemplo / recomendación
+    TODO Alumno: tarea que deben realizar durante la clase
+    Solución: bloque comentado para mostrar a demanda
+
+  Objetivo de esta plantilla:
+    - Trabajar sobre el mismo portfolio de la UT5 y practicar un flujo
+      profesional: inspeccionar -> modificar -> probar -> versionar.
+    - Demostrar DevTools para HTML/CSS y JavaScript.
+    - Introducir Git básico (init, status, add, commit).
+
+  Cómo usarla:
+    1) Abre con Live Server.
+    2) Proyecta y explica cada sección leyendo los comentarios superiores.
+    3) Pide al alumnado que aplique los TODO en su propia copia del portfolio.
+    4) Relaciona siempre los cambios con commits pequeños y significativos.
+  =====================================================================
+  -->
+
+  <style>
+    :root {
+      --bg: #f5f6fb;
+      --ink: #0f172a;
+      --muted: #6b7280;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --code: #0b1120;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header .wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    header nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    header nav a {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+    header nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+      display: grid;
+      gap: 24px;
+    }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 8px 26px rgba(15, 23, 42, 0.08);
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+    p.muted {
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding-left: 16px;
+      margin: 1rem 0;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 14px;
+      overflow-x: auto;
+      font-size: 0.92rem;
+    }
+    code {
+      background: rgba(15, 23, 42, 0.08);
+      border-radius: 4px;
+      padding: 0 4px;
+    }
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-left: 1rem;
+    }
+    .todo {
+      background: #fef3c7;
+      border: 1px solid #facc15;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-top: 16px;
+    }
+    .git-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+    ! ENCABEZADO GENERAL
+    Explica la idea de esta UT: se reutiliza la web final (UT5) y se
+    aplica DevTools + Git para trabajar como dev junior.
+    * Recomienda abrir esta plantilla y el portfolio simultáneamente.
+  -->
+  <header>
+    <div class="wrapper">
+      <div>
+        <h1>UT6 - DevTools + Git</h1>
+        <p class="muted">Inspecciona, depura y versiona tu portfolio final.</p>
+      </div>
+      <nav aria-label="Índice rápido">
+        <ul>
+          <li><a href="#devtools-css">DevTools HTML/CSS</a></li>
+          <li><a href="#devtools-js">DevTools JS</a></li>
+          <li><a href="#git">Git básico</a></li>
+          <li><a href="#reto">Reto integrador</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!--
+      ! SECCIÓN DEVTOLS HTML/CSS
+      Objetivo: mostrar el inspector, ajustar estilos en vivo
+      y pasar el resultado al código real.
+      ? Apóyate en el portfolio de UT5 ya abierto en otra pestaña.
+    -->
+    <section id="devtools-css">
+      <h2>DevTools: HTML y CSS</h2>
+      <p class="muted">Inspecciona elementos, revisa el box model y copia reglas pulidas.</p>
+
+      <div class="callout">
+        <strong>Flujo sugerido:</strong>
+        <ol class="steps">
+          <li>Abrir DevTools (`F12`) y elegir la pestaña <em>Elements</em>.</li>
+          <li>Activar el icono de selección para apuntar al botón de WhatsApp en el hero.</li>
+          <li>Modificar color, padding y borde dentro de la pestaña <em>Styles</em>.</li>
+          <li>Copiar la regla (Copy rule) y pegarla en tu CSS real.</li>
+        </ol>
+      </div>
+
+      <pre><code>&lt;!-- Botón del hero en la UT5 --&gt;
+&lt;a class="btn btn-success btn-lg btn-whatsapp" href="https://wa.me/34XXXXXXX" target="_blank"&gt;
+  &lt;i class="bi bi-whatsapp"&gt;&lt;/i&gt; WhatsApp
+&lt;/a&gt;</code></pre>
+
+      <pre><code>/* Ajustes validados en DevTools */
+.btn-whatsapp {
+  background-color: #15803d;
+  padding: 0.9rem 1.8rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(21, 128, 61, 0.35);
+}</code></pre>
+
+      <!-- TODO Alumno:
+        Replica el proceso en tu portfolio.
+        1. Cambia sombra y radio del hero.
+        2. Ajusta la tarjeta de proyectos para que suba 6px al hacer hover.
+        3. Documenta en un comentario dónde pegaste el nuevo CSS.
+      -->
+      <div class="todo">
+        TODO Alumno:
+        <ul>
+          <li>Repite el ajuste del botón y confirma que el CSS quedó en tu archivo.</li>
+          <li>Usa DevTools para dar un efecto hover a `.project-card` y copia la regla.</li>
+          <li>Actualiza el código real y guarda el cambio para un commit posterior.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!--
+      ! SECCIÓN DEVTOLS JAVASCRIPT
+      Objetivo: leer errores, usar console.log y breakpoints cortos.
+      * El script al final del documento sirve para practicar.
+    -->
+    <section id="devtools-js">
+      <h2>DevTools: JavaScript</h2>
+      <p class="muted">Consola, errores comunes y breakpoints para entender el flujo.</p>
+
+      <pre><code>// Fragmento listo para practicar en la consola
+const demoButton = document.querySelector("#demoToggle");
+const demoState = document.querySelector("#demoState");
+
+const setDemoMode = (mode) => {
+  console.log("Modo anterior:", demoState.dataset.mode);
+  demoState.dataset.mode = mode;
+  demoState.textContent = `Modo actual: ${mode}`;
+};
+
+demoButton.addEventListener("click", () => {
+  const next = demoState.dataset.mode === "light" ? "dark" : "light";
+  setDemoMode(next);
+});</code></pre>
+
+      <div class="callout">
+        <strong>Tips rápidos:</strong>
+        <ul class="steps">
+          <li>Abre la consola y escribe `console.clear()` antes de cada prueba.</li>
+          <li>Rompe el script (por ejemplo, eliminando un paréntesis) y lee el error con calma.</li>
+          <li>Coloca un breakpoint en `setDemoMode` para inspeccionar `mode` paso a paso.</li>
+          <li>Vuelve a tu portfolio real y añade los mismos `console.log` al toggle del modo oscuro.</li>
+        </ul>
+      </div>
+
+      <!-- TODO Alumno:
+        1. Copia el snippet en tu proyecto y comprueba que cambia el texto.
+        2. Introduce un error intencional, recarga y localiza la línea exacta.
+        3. Arregla y repite, ahora usando un breakpoint en el listener.
+      -->
+      <div class="todo">
+        TODO Alumno:
+        <ol class="steps">
+          <li>Implementa los `console.log` en tu función real de modo oscuro.</li>
+          <li>Añade una alerta en el formulario de contacto y depúrala con un breakpoint.</li>
+          <li>Guarda el archivo listo para versionar en Git.</li>
+        </ol>
+      </div>
+
+      <div id="demoState" data-mode="light" class="callout">
+        Modo actual: light
+      </div>
+      <button id="demoToggle">Cambiar modo (demo)</button>
+    </section>
+
+    <!--
+      ! SECCIÓN GIT
+      Objetivo: mostrar comandos mínimos y mensajes de commit claros.
+      ? No se ejecutan desde la plantilla; es guía textual para la terminal.
+    -->
+    <section id="git">
+      <h2>Git básico aplicado al portfolio</h2>
+      <p class="muted">Inicializa, revisa estado y crea commits descriptivos.</p>
+
+      <div class="git-grid">
+        <div>
+          <h3>Flujo general</h3>
+          <pre><code>git init
+git status
+git add index.html css/styles.css js/app.js
+git commit -m "chore: versión inicial de UT5"</code></pre>
+        </div>
+        <div>
+          <h3>Después de ajustar estilos</h3>
+          <pre><code>git status
+git add css/styles.css
+git commit -m "style: mejora botón de WhatsApp"</code></pre>
+        </div>
+        <div>
+          <h3>Después de depurar JS</h3>
+          <pre><code>git status
+git add js/app.js
+git commit -m "fix: asegura toggle de modo oscuro"</code></pre>
+        </div>
+      </div>
+
+      <!-- TODO Alumno:
+        Escribe tres mensajes de commit diferentes:
+        1) Ajuste visual,
+        2) Mejora funcional,
+        3) Limpieza final.
+        Luego ejecútalos en su propio proyecto.
+      -->
+      <div class="todo">
+        TODO Alumno:
+        <ul>
+          <li>Init + commit base con el portfolio sin cambios.</li>
+          <li>Commit 2 tras el ajuste CSS (`style: ...`).</li>
+          <li>Commit 3 tras depurar JS (`fix:` o `feat:` según corresponda).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!--
+      ! SECCIÓN RETO INTEGRADOR
+      Explica paso a paso qué deben entregar al final de la UT6.
+      * Puedes revisar en directo los commits del alumno.
+    -->
+    <section id="reto">
+      <h2>Reto integrador UT6</h2>
+      <p class="muted">Todo sobre tu portfolio: mejora visual + mejora funcional + historial en Git.</p>
+
+      <ol class="steps">
+        <li><strong>Mejora visual:</strong> refuerza contraste del hero o las tarjetas de proyectos.</li>
+        <li><strong>Mejora funcional:</strong> añade confirmación en el formulario o conserva el modo oscuro en `localStorage`.</li>
+        <li><strong>Commits:</strong> registra cada bloque de cambios y explica al profesor qué resolviste.</li>
+      </ol>
+
+      <!-- TODO Alumno:
+        Marca cada acción en tu cuaderno/README y muestra los commits:
+        - style: ...
+        - feat/fix: ...
+        - chore: ...
+      -->
+      <div class="todo">
+        TODO Alumno:
+        <p>Completa el reto y enseña al profesor:</p>
+        <ul>
+          <li>Lista de cambios aplicados (visual + funcional).</li>
+          <li>Salida de `git log --oneline` con mensajes claros.</li>
+          <li>Página funcionando tras recargar (sin errores de consola).</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!--
+    ! SCRIPT DEMO
+    Sirve para practicar breakpoints sin tocar el portfolio real.
+    * Recomienda copiarlo al proyecto del alumno y adaptarlo.
+  -->
+  <script>
+    const demoButton = document.querySelector("#demoToggle");
+    const demoState = document.querySelector("#demoState");
+
+    if (demoButton && demoState) {
+      const setDemoMode = (mode) => {
+        console.log("Modo anterior:", demoState.dataset.mode);
+        demoState.dataset.mode = mode;
+        demoState.textContent = "Modo actual: " + mode;
+      };
+
+      demoButton.addEventListener("click", () => {
+        const next = demoState.dataset.mode === "light" ? "dark" : "light";
+        setDemoMode(next);
+      });
+    }
+  </script>
+</body>
+</html>
