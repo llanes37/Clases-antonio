@@ -1,0 +1,85 @@
+<!--
+================================================================================
+ARCHIVO: resultado.html (RESPUESTA DEL FORMULARIO)
+================================================================================
+¿QUÉ ES?
+  Página que se muestra después de enviar el formulario de index.html.
+  Recibe la variable `nombre` desde la vista `procesar()`.
+
+FLUJO:
+  1. Usuario rellena el formulario en index.html
+  2. Hace click en "Enviar" → POST a /procesar/
+  3. La vista procesar() lee request.POST.get("nombre")
+  4. Renderiza este template con contexto = {"nombre": "..."}
+  5. El usuario ve el mensaje de bienvenida
+
+CONCEPTOS DJANGO:
+  - {% extends 'base.html' %}: hereda de la plantilla base
+  - {% block content %}: define el contenido específico de esta página
+  - {{ nombre }}: muestra el valor de la variable "nombre" del contexto
+  - {% url 'core:inicio' %}: genera la URL de la ruta "inicio"
+================================================================================
+-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- 
+  CARD CON EL RESULTADO
+  =====================
+  Usamos las clases de Bootstrap:
+  - card: contenedor con bordes redondeados
+  - shadow-sm: sombra suave
+  - alert-success: fondo verde para indicar éxito
+  -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      
+      <!-- 
+      ALERTA DE ÉXITO
+      ===============
+      Bootstrap tiene alertas predefinidas:
+      - alert-success: verde (éxito)
+      - alert-danger: rojo (error)
+      - alert-warning: amarillo (advertencia)
+      - alert-info: azul (información)
+      -->
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">✅ ¡Enviado correctamente!</h4>
+        
+        <!-- 
+        VARIABLE DEL CONTEXTO
+        =====================
+        {{ nombre }} se reemplaza por el valor que pasamos en la vista:
+        contexto = {"nombre": "Joaquín"}
+        Resultado: <strong>Joaquín</strong>
+        -->
+        <p class="mb-2">¡Hola, <strong>{{ nombre }}</strong>! 👋</p>
+        
+        <hr>
+        
+        <!-- Explicación didáctica para el alumno -->
+        <p class="mb-0 small">
+          <strong>¿Qué pasó?</strong><br>
+          1. El formulario envió los datos por <code>POST</code> a <code>/procesar/</code><br>
+          2. La vista leyó el nombre con <code>request.POST.get("nombre")</code><br>
+          3. Renderizó este template pasando <code>{"nombre": "{{ nombre }}"}</code>
+        </p>
+      </div>
+      
+      <!-- 
+      BOTÓN PARA VOLVER
+      =================
+      {% url 'core:inicio' %} genera la URL: /
+      - Es mejor que href="/" porque si cambias la ruta, sigue funcionando
+      - 'core:inicio' = namespace:nombre definido en urls.py
+      -->
+      <a href="{% url 'core:inicio' %}" class="btn btn-outline-primary">
+        ← Volver al inicio
+      </a>
+      
+    </div>
+  </div>
+{% endblock %}
+
+

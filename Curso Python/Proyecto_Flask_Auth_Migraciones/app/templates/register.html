@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Registro{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Crear cuenta</h1>
+  <form method="post" class="form">
+    <label>Nombre</label>
+    <input type="text" name="nombre" placeholder="Nombre visible">
+    <label>Email</label>
+    <input type="email" name="email" placeholder="tu@email.com">
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Min. 6 caracteres sugeridos">
+    <button type="submit">Registrarme</button>
+  </form>
+</section>
+{% endblock %}

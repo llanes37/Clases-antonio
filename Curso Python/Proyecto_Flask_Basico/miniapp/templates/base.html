@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Mini Flask Básico{% endblock %}</title>
+  <style>
+    body{font-family:system-ui, Arial, sans-serif; margin:1rem}
+    header{margin-bottom:1rem}
+    form{display:flex; gap:.5rem; align-items:center}
+    input[type=text]{padding:.3rem}
+    button{padding:.4rem .7rem}
+    ul{padding-left:1.1rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mini Flask Básico</h1>
+    {# * Esta plantilla base define el layout.
+       Los hijos (index.html) rellenan los bloques title y content. #}
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

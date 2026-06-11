@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Panel Admin{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Panel de administración</h1>
+  <p>Desde aquí puedes cambiar roles y activar o desactivar usuarios.</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Activo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in usuarios %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.activo }}</td>
+          <td>
+            <form method="post" action="{{ url_for('admin.toggle_user', user_id=user.id) }}" class="inline">
+              <button type="submit">Toggle activo</button>
+            </form>
+            <form method="post" action="{{ url_for('admin.change_role', user_id=user.id) }}" class="inline">
+              <select name="role">
+                <option value="student" {% if user.role == 'student' %}selected{% endif %}>student</option>
+                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>admin</option>
+              </select>
+              <button type="submit">Cambiar rol</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Proyecto Flask Auth + Migraciones</h1>
+  <p>Proyecto didáctico para aprender sesiones, roles, SQLAlchemy y Flask-Migrate.</p>
+</section>
+
+{% if g.user %}
+  <section class="card">
+    <h2>Zona privada</h2>
+    <p>Has iniciado sesión como <strong>{{ g.user.nombre }}</strong> ({{ g.user.role }}).</p>
+    <form method="post" action="{{ url_for('main.crear_nota') }}" class="form">
+      <label>Título</label>
+      <input type="text" name="titulo" placeholder="Título de la nota">
+      <label>Contenido</label>
+      <textarea name="contenido" rows="4" placeholder="Contenido privado"></textarea>
+      <button type="submit">Crear nota</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Mis notas</h2>
+    {% if notas %}
+      <ul class="list">
+        {% for nota in notas %}
+          <li>
+            <strong>{{ nota.titulo }}</strong>
+            <span>{{ nota.contenido }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Todavía no tienes notas privadas.</p>
+    {% endif %}
+  </section>
+{% else %}
+  <section class="card">
+    <h2>Qué puedes practicar aquí</h2>
+    <ul class="list">
+      <li>Registro de usuarios y login con password hasheada.</li>
+      <li>Sesión de usuario usando cookies seguras de Flask.</li>
+      <li>Protección de rutas con decoradores.</li>
+      <li>Roles simples: alumno y admin.</li>
+      <li>Preparación del proyecto para migraciones reales.</li>
+    </ul>
+  </section>
+{% endif %}
+{% endblock %}

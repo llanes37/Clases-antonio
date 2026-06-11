@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Inicio — Proyecto Flask Final{% endblock %}
+{% block content %}
+<section>
+  <h2>Bienvenido</h2>
+  <p>Esta app muestra ejemplos prácticos de todo el curso: rutas, plantillas, API, BD, ficheros y pruebas.</p>
+</section>
+<section>
+  <h3>Cursos publicados</h3>
+  {% if cursos %}
+  <ul>
+    {% for c in cursos %}
+      <li>
+        <strong>{{ c.titulo }}</strong>
+        {% if c.descripcion %}<br><small>{{ c.descripcion }}</small>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No hay cursos aún. Prueba a crear con el comando CLI: <code>flask seed</code></p>
+  {% endif %}
+</section>
+{% endblock %}

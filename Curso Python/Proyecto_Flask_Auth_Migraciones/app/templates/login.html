@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Iniciar sesión</h1>
+  <form method="post" class="form">
+    <label>Email</label>
+    <input type="email" name="email" placeholder="tu@email.com">
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Tu password">
+    <button type="submit">Entrar</button>
+  </form>
+</section>
+{% endblock %}

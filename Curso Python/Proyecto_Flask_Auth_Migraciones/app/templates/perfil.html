@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Perfil del usuario</h1>
+  <p><strong>Nombre:</strong> {{ g.user.nombre }}</p>
+  <p><strong>Email:</strong> {{ g.user.email }}</p>
+  <p><strong>Rol:</strong> {{ g.user.role }}</p>
+  <p><strong>Activo:</strong> {{ g.user.activo }}</p>
+</section>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Cursos — Proyecto Flask Final{% endblock %}
+{% block content %}
+<section>
+  <h2>Lista de cursos</h2>
+  <p>Ejemplo de bucles y condicionales en Jinja.</p>
+  <ul id="lista-cursos">
+    {% for c in cursos %}
+    <li>
+      <strong>{{ c.titulo }}</strong>
+      {% if c.descripcion %}<br><small>{{ c.descripcion }}</small>{% endif %}
+      <br><em>Publicado: {{ 'Sí' if c.publicado else 'No' }}</em>
+    </li>
+    {% else %}
+    <li>No hay cursos registrados.</li>
+    {% endfor %}
+  </ul>
+</section>
+<section>
+  <h3>Crear curso (API)</h3>
+  <form id="form-curso">
+    <label>Título
+      <input type="text" name="titulo" required>
+    </label>
+    <label>Descripción
+      <input type="text" name="descripcion">
+    </label>
+    <label>
+      <input type="checkbox" name="publicado" checked> Publicado
+    </label>
+    <button type="submit">Crear</button>
+  </form>
+  <pre id="resultado"></pre>
+</section>
+<script>
+  const form = document.getElementById('form-curso');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      titulo: form.titulo.value,
+      descripcion: form.descripcion.value,
+      publicado: form.publicado.checked
+    };
+    const res = await fetch('/api/cursos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const json = await res.json();
+    document.getElementById('resultado').textContent = JSON.stringify(json, null, 2);
+    // Recargar para ver la lista actualizada (simple para curso básico)
+    if (res.ok) location.reload();
+  });
+</script>
+{% endblock %}
